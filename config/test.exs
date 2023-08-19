@@ -31,3 +31,8 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Import the local overwrites.
+if File.exists?(Path.join(__DIR__, "test.local.exs")) do
+  import_config "test.local.exs"
+end
