@@ -9,7 +9,8 @@ defmodule Lzh.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -68,6 +69,15 @@ defmodule Lzh.MixProject do
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+    ]
+  end
+
+  # Release definition(s).
+  defp releases do
+    [
+      lzh: [
+        include_executables_for: [:unix]
+      ]
     ]
   end
 end
