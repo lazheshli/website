@@ -8,12 +8,12 @@ defmodule Lzh.Repo.Migrations.CreateStatements do
 
       add :date, :date, null: false
       add :tv_show, :string, size: 200, null: false
-      add :tv_show_url, :string, null: false
+      add :tv_show_url, :text, null: false
       add :tv_show_minute, :integer, null: false
 
-      add :statement, :text
-      add :response, :text
-      add :sources, {:array, :string}
+      add :statement, :text, null: false
+      add :response, :text, null: false
+      add :sources, {:array, :text}, null: false
 
       timestamps(type: :timestamptz)
     end

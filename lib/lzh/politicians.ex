@@ -8,7 +8,7 @@ defmodule Lzh.Politicians do
   #
 
   @doc """
-  Returns the list of parties.
+  Returns the list of political parties.
 
   ## Examples
 
@@ -21,7 +21,7 @@ defmodule Lzh.Politicians do
   end
 
   @doc """
-  Gets a single party.
+  Gets a single political party.
 
   Raises `Ecto.NoResultsError` if the Party does not exist.
 
@@ -37,7 +37,23 @@ defmodule Lzh.Politicians do
   def get_party!(id), do: Repo.get!(Party, id)
 
   @doc """
-  Creates a party.
+  Gets a single political party by name.
+
+  ## Examples
+
+      iex> get_party("Има")
+      %Party{}
+
+      iex> get_party("Няма")
+      nil
+
+  """
+  def get_party(name) when is_binary(name) do
+    Repo.get_by(Party, name: name)
+  end
+
+  @doc """
+  Creates a political party.
 
   ## Examples
 
@@ -55,7 +71,7 @@ defmodule Lzh.Politicians do
   end
 
   @doc """
-  Updates a party.
+  Updates a political party.
 
   ## Examples
 
@@ -73,7 +89,7 @@ defmodule Lzh.Politicians do
   end
 
   @doc """
-  Deletes a party.
+  Deletes a political party.
 
   ## Examples
 
@@ -89,7 +105,7 @@ defmodule Lzh.Politicians do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking party changes.
+  Returns an `%Ecto.Changeset{}` for tracking political party changes.
 
   ## Examples
 
@@ -133,6 +149,28 @@ defmodule Lzh.Politicians do
 
   """
   def get_politician!(id), do: Repo.get!(Politician, id)
+
+  @doc """
+  Gets a single politician by name and political party.
+
+  ## Examples
+
+      iex> get_party("Има")
+      %Party{}
+
+      iex> get_party("Няма")
+      nil
+
+  """
+  def get_politician(name, party)
+
+  def get_politician(name, %Party{id: party_id}) do
+    get_politician(name, party_id)
+  end
+
+  def get_politician(name, party_id) when is_integer(party_id) do
+    Repo.get_by(Politician, name: name, party_id: party_id)
+  end
 
   @doc """
   Creates a politician.

@@ -46,5 +46,7 @@ defmodule Lzh.Statements.Statement do
     ])
     |> assoc_constraint(:election)
     |> assoc_constraint(:politician)
+    |> validate_length(:tv_show, min: 1, max: 200)
+    |> validate_number(:tv_show_minute, greater_than_or_equal_to: 0)
   end
 end

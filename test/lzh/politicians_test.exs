@@ -20,6 +20,11 @@ defmodule Lzh.PoliticiansTest do
       assert Politicians.get_party!(party.id) == party
     end
 
+    test "get_party/1 return the party with given name" do
+      party = party_fixture()
+      assert Politicians.get_party(party.name) == party
+    end
+
     test "create_party/1 with valid data creates a party" do
       valid_attrs = %{name: "some name"}
 
@@ -72,6 +77,14 @@ defmodule Lzh.PoliticiansTest do
     test "get_politician!/1 returns the politician with given id" do
       politician = politician_fixture()
       assert Politicians.get_politician!(politician.id) == politician
+    end
+
+    test "get_politician/1 returns the politician with given name and party" do
+      party = party_fixture()
+      politician = politician_fixture(%{party_id: party.id})
+
+      assert Politicians.get_politician(politician.name, party.id) == politician
+      assert Politicians.get_politician(politician.name, party) == politician
     end
 
     test "create_politician/1 with valid data creates a politician" do
