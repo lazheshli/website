@@ -12,6 +12,7 @@ defmodule Lzh.Statements.Statement do
     field :tv_show_url, :string
     field :tv_show_minute, :integer
 
+    field :statement, :string
     field :response, :string
     field :sources, {:array, :string}
 
@@ -28,6 +29,7 @@ defmodule Lzh.Statements.Statement do
       :tv_show,
       :tv_show_url,
       :tv_show_minute,
+      :statement,
       :response,
       :sources
     ])
@@ -38,6 +40,7 @@ defmodule Lzh.Statements.Statement do
       :tv_show,
       :tv_show_url,
       :tv_show_minute,
+      :statement,
       :response,
       :sources
     ])

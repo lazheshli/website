@@ -13,6 +13,7 @@ defmodule Lzh.StatementsTest do
       tv_show: nil,
       tv_show_url: nil,
       tv_show_minute: nil,
+      statement: nil,
       response: nil,
       sources: nil
     }
@@ -38,6 +39,7 @@ defmodule Lzh.StatementsTest do
         tv_show: "some tv_show",
         tv_show_url: "some tv_show_url",
         tv_show_minute: 42,
+        statement: "some statement",
         response: "some response",
         sources: ["option1", "option2"]
       }

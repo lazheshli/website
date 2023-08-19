@@ -11,6 +11,7 @@ defmodule Lzh.Repo.Migrations.CreateStatements do
       add :tv_show_url, :string, null: false
       add :tv_show_minute, :integer, null: false
 
+      add :statement, :text
       add :response, :text
       add :sources, {:array, :string}
 

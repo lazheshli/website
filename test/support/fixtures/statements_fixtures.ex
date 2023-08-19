@@ -23,10 +23,8 @@ defmodule Lzh.StatementsFixtures do
       |> Map.put_new(:tv_show, "TV Show #{System.unique_integer([:positive])}")
       |> Map.put_new(:tv_show_url, "http://example.com")
       |> Map.put_new(:tv_show_minute, 42)
-      |> Map.put_new(
-        :response,
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-      )
+      |> Map.put_new(:statement, "Lorem ipsum dolor sit amet.")
+      |> Map.put_new(:response, "Consectetur adipiscing elit.")
       |> Map.put_new(:sources, ["http://example.com"])
       |> Lzh.Statements.create_statement()
 
