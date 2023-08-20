@@ -1,0 +1,96 @@
+<header class="mb-8">
+  <h1 class="text-2xl leading-8 font-semibold">Парламентарни избори 2023</h1>
+</header>
+
+<h2 class="text-xl leading-8 mb-4">Покажи само твърденията на:</h2>
+<div class="flex flex-wrap gap-2 mb-12">
+  <button
+    :for={politician <- @politicians}
+    type="button"
+    phx-click="toggle_politician"
+    phx-value-id={politician.id}
+    class={[
+      "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
+      if(politician.id == @selected_politician_id, do: "bg-zinc-700 !text-white")
+    ]}
+  >
+    <%= politician.name %>
+  </button>
+</div>
+
+<div :for={statement <- @statements} class="w-full p-6 rounded-md border-2 border-zinc-200 my-4">
+  <div class="w-full flex flex-row flex-wrap">
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-user" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Кандидат</dt>
+        <dd>
+          <span class=""><%= statement.politician.name %></span>
+          (<%= statement.politician.party.name %>)
+        </dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-tv" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Предаване</dt>
+        <dd>
+          <%= statement.tv_show %> (<a
+            href={statement.tv_show_url}
+            class="underline"
+            title="Връзка към предаването"
+          >връзка</a>)
+        </dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-calendar-days" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Дата на излъчване</dt>
+        <dd><%= statement.date %></dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-clock" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Минута на изказване</dt>
+        <dd>
+          <%= statement.tv_show_minute %> мин.
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="w-full mb-4 flex flex-row">
+    <.icon name="hero-chat-bubble-left-ellipsis" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Невярно твърдение</dt>
+      <dd><%= statement.statement %></dd>
+    </dl>
+  </div>
+
+  <div class="w-full mb-4 flex flex-row">
+    <.icon name="hero-check-circle" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Нашата аргументация</dt>
+      <dd><%= statement.response %></dd>
+    </dl>
+  </div>
+
+  <div class="w-full flex flex-row">
+    <.icon name="hero-book-open" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Източници</dt>
+      <dd>
+        <ul class="list-inside list-disc">
+          <li :for={source <- statement.sources}>
+            <a href={source} class="underline"><%= source %></a>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</div>

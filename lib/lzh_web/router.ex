@@ -18,6 +18,8 @@ defmodule LzhWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/elections/:id", ElectionLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

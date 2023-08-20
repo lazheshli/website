@@ -20,7 +20,9 @@ defmodule Lzh.StatementsTest do
 
     test "list_statements/0 returns all statements" do
       statement = statement_fixture()
-      assert Statements.list_statements() == [statement]
+
+      [res] = Statements.list_statements()
+      assert res.id == statement.id
     end
 
     test "get_statement!/1 returns the statement with given id" do

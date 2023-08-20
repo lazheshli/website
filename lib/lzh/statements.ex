@@ -1,10 +1,14 @@
 defmodule Lzh.Statements do
+  import Ecto.Query
+
   alias Lzh.Repo
 
   alias Lzh.Statements.Statement
 
   @doc """
   Returns the list of statements.
+
+  Preload the politicians and their parties.
 
   ## Examples
 
@@ -13,7 +17,9 @@ defmodule Lzh.Statements do
 
   """
   def list_statements do
-    Repo.all(Statement)
+    Statement
+    |> preload(politician: [:party])
+    |> Repo.all()
   end
 
   @doc """
