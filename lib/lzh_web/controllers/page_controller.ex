@@ -12,4 +12,10 @@ defmodule LzhWeb.PageController do
     |> assign(:page_title, "За проекта")
     |> render(:about)
   end
+
+  def faq(conn, _params) do
+    conn
+    |> assign(:page_title, "Често задавани въпроси")
+    |> render(:faq)
+  end
 end

@@ -1,4 +1,4 @@
-<header class="w-full md:hidden p-4 bg-zinc-100 flex flex-row">
+<header class="w-full lg:hidden p-4 bg-zinc-100 flex flex-row">
   <h1 class="grow text-2xl leading-8 font-semibold">Лъжеш ли?</h1>
   <button type="button" phx-click={JS.toggle(to: "#nav-aside", time: 0)}>
     <.icon name="hero-bars-3" class="h-8 w-8" />
@@ -8,12 +8,12 @@
 <div class="w-full flex flex-row">
   <aside
     id="nav-aside"
-    class="w-80 h-screen md:h-auto fixed md:static hidden md:block bg-white shadow-xl md:shadow-none z-10"
+    class="w-80 h-screen lg:h-auto fixed lg:static hidden lg:block bg-white shadow-xl lg:shadow-none z-10"
   >
     <a
       href={~p"/"}
       title="Лъжеш ли?"
-      class="hidden md:block w-80 h-80 bg-cover bg-center"
+      class="hidden lg:block w-80 h-80 bg-cover bg-center"
       style="background-image: url(/images/logo.jpg)"
     >
     </a>
@@ -53,7 +53,7 @@
       </a>
 
       <a
-        href={~p"/"}
+        href={~p"/методика"}
         title="Методика"
         class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
       >
@@ -64,7 +64,7 @@
       </a>
 
       <a
-        href={~p"/"}
+        href={~p"/често-задавани-въпроси"}
         title="Често задавани въпроси"
         class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
       >
