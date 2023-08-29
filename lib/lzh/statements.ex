@@ -3,23 +3,54 @@ defmodule Lzh.Statements do
 
   alias Lzh.Repo
 
+  alias Lzh.Elections.Election
   alias Lzh.Statements.Statement
 
   @doc """
-  Returns the list of statements.
+  Returns the list of statements for a given election.
 
-  Preload the politicians and their parties.
+  Preloads the politicians and their parties.
+
+  The list can be optionally filtered using the :party and :politician opts.
 
   ## Examples
 
-      iex> list_statements()
+      iex> list_statements(election)
       [%Statement{}, ...]
 
   """
-  def list_statements do
+  def list_statements(%Election{id: election_id}, opts \\ []) do
     Statement
-    |> preload(politician: [:party])
+    |> where([statement], statement.election_id == ^election_id)
+    |> join(:left, [statement], politician in assoc(statement, :politician))
+    |> join(:left, [_statement, politician], party in assoc(politician, :party))
+    |> preload([_statement, politician, party], politician: {politician, party: party})
+    |> maybe_filter_by_politician(opts)
+    |> maybe_filter_by_party(opts)
+    |> order_by([statement], asc: statement.date)
     |> Repo.all()
+  end
+
+  defp maybe_filter_by_politician(query, opts) do
+    case Keyword.fetch(opts, :politician) do
+      {:ok, %{id: politician_id}} ->
+        query
+        |> where([_statement, politician], politician.id == ^politician_id)
+
+      :error ->
+        query
+    end
+  end
+
+  defp maybe_filter_by_party(query, opts) do
+    case Keyword.fetch(opts, :party) do
+      {:ok, %{id: party_id}} ->
+        query
+        |> where([_statement, _politician, party], party.id == ^party_id)
+
+      :error ->
+        query
+    end
   end
 
   @doc """
