@@ -18,4 +18,10 @@ defmodule LzhWeb.PageController do
     |> assign(:page_title, "Често задавани въпроси")
     |> render(:faq)
   end
+
+  def privacy_policy(conn, _params) do
+    conn
+    |> assign(:page_title, "Политика за поверителност")
+    |> render(:privacy_policy)
+  end
 end

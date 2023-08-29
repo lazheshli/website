@@ -419,7 +419,7 @@ defmodule LzhWeb.CoreComponents do
   def h1(assigns) do
     ~H"""
     <h1 class={[
-      "w-full lg:w-2/3 lg:mx-auto my-10 clear-both leading-snug text-center text-6xl uppercase border-b-8 border-black",
+      "w-full lg:w-2/3 lg:mx-auto my-10 clear-both leading-snug text-center text-6xl hyphens-auto sm:hyphens-manual uppercase border-b-8 border-black",
       @class
     ]}>
       <%= render_slot(@inner_block) %>
