@@ -2,7 +2,26 @@
   <h1 class="text-2xl leading-8 font-semibold">Парламентарни избори 2023</h1>
 </header>
 
-<h2 class="text-xl leading-8 mb-4">Покажи само твърденията на:</h2>
+<h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
+<div class="flex flex-wrap gap-2 mb-12">
+  <.link
+    :for={party <- @parties}
+    patch={
+      if(party.id == @selected_party_id,
+        do: ~p"/elections/#{@election.id}",
+        else: ~p"/elections/#{@election.id}?party=#{party.id}"
+      )
+    }
+    class={[
+      "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
+      if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
+    ]}
+  >
+    <%= party.name %>
+  </.link>
+</div>
+
+<h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения на:</h2>
 <div class="flex flex-wrap gap-2 mb-12">
   <.link
     :for={politician <- @politicians}
@@ -21,6 +40,7 @@
   </.link>
 </div>
 
+<h2 class="text-xl leading-8 mb-4">Неверни твърдения</h2>
 <div
   :for={statement <- @selected_statements}
   class="w-full p-6 rounded-md border-2 border-zinc-200 my-4"
