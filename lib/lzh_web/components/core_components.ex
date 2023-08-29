@@ -410,6 +410,42 @@ defmodule LzhWeb.CoreComponents do
   end
 
   @doc """
+  Renders a styled <h1>.
+  """
+  attr :class, :string, default: nil
+
+  slot :inner_block, required: true
+
+  def h1(assigns) do
+    ~H"""
+    <h1 class={[
+      "w-2/3 mx-auto my-10 clear-both text-center text-6xl leading-snug uppercase border-b-8 border-black",
+      @class
+    ]}>
+      <%= render_slot(@inner_block) %>
+    </h1>
+    """
+  end
+
+  @doc """
+  Renders a styled <h2>.
+  """
+  attr :class, :string, default: nil
+
+  slot :inner_block, required: true
+
+  def h2(assigns) do
+    ~H"""
+    <h2 class={[
+      "w-full my-4 clear-both text-3xl leading-snug border-b-2 border-black",
+      @class
+    ]}>
+      <%= render_slot(@inner_block) %>
+    </h2>
+    """
+  end
+
+  @doc """
   Renders a header with title.
   """
   attr :class, :string, default: nil
