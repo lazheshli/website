@@ -39,8 +39,8 @@ defmodule LzhWeb.ElectionLive.Show do
   def handle_params(params, _uri, socket) do
     %{politicians: politicians, parties: parties, statements: statements} = socket.assigns
 
-    selected_politician_id = determine_id(params, "politician", politicians)
-    selected_party_id = determine_id(params, "party", parties)
+    selected_politician_id = get_selected_id(params, "политик", politicians)
+    selected_party_id = get_selected_id(params, "партия", parties)
 
     selected_statements =
       statements
@@ -60,7 +60,7 @@ defmodule LzhWeb.ElectionLive.Show do
     {:noreply, socket}
   end
 
-  defp determine_id(params, key, list) do
+  defp get_selected_id(params, key, list) do
     with %{^key => string_id} <- params,
          {id, ""} <- Integer.parse(string_id),
          true <- Enum.any?(list, fn item -> item.id == id end) do

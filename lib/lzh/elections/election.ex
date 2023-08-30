@@ -3,6 +3,8 @@ defmodule Lzh.Elections.Election do
 
   import Ecto.Changeset
 
+  @derive {Phoenix.Param, key: :id}
+
   schema "elections" do
     field :type, Ecto.Enum, values: [:parliamentary, :presidential, :local]
     field :date, :date

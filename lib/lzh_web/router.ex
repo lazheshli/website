@@ -22,7 +22,7 @@ defmodule LzhWeb.Router do
     get "/често-задавани-въпроси", PageController, :faq
     get "/политика-за-поверителност", PageController, :privacy_policy
 
-    live "/elections/:id", ElectionLive.Show, :show
+    live "/избори/:id", ElectionLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
