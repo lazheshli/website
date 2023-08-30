@@ -18,6 +18,7 @@ defmodule LzhWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/начало", PageController, :home
     get "/за-проекта", PageController, :about
     get "/често-задавани-въпроси", PageController, :faq
     get "/политика-за-поверителност", PageController, :privacy_policy
