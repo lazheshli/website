@@ -20,8 +20,11 @@ defmodule LzhWeb.Router do
     get "/", PageController, :home
     get "/начало", PageController, :home
     get "/за-проекта", PageController, :about
+    get "/методика", PageController, :methodology
+    get "/екип", PageController, :team
     get "/често-задавани-въпроси", PageController, :faq
     get "/политика-за-поверителност", PageController, :privacy_policy
+    get "/отказ-от-отговорност", PageController, :disclaimer
 
     live "/избори/:id", ElectionLive.Show, :show
   end
