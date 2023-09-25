@@ -437,7 +437,7 @@ defmodule LzhWeb.CoreComponents do
   def h2(assigns) do
     ~H"""
     <h2 class={[
-      "w-full my-4 clear-both text-3xl leading-snug border-b-2 border-black",
+      "w-fit my-4 clear-both text-3xl leading-snug border-b-2 border-black",
       @class
     ]}>
       <%= render_slot(@inner_block) %>
