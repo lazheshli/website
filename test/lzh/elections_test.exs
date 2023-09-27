@@ -69,7 +69,12 @@ defmodule Lzh.ElectionsTest do
 
     test "election_name/1 returns an elections's name" do
       election = election_fixture()
-      assert Elections.election_name(election) == "Парламентарни избори (август)"
+      assert Elections.election_name(election) == "Парламентарни избори"
+    end
+
+    test "election_month_name/1 returns the name of the month of an elections" do
+      election = election_fixture()
+      assert Elections.election_month_name(election) == "август"
     end
 
     test "election_slug/1 returns an elections's slug" do

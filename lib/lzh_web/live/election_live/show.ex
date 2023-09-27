@@ -7,11 +7,11 @@ defmodule LzhWeb.ElectionLive.Show do
   def mount(%{"slug" => slug}, _session, socket) do
     election = Elections.get_election_by_slug(slug)
 
-    if is_nil(election) do
-      raise Ecto.NoResultsError
-    end
-
-    election = Map.put(election, :slug, Elections.election_slug(election))
+    election =
+      election
+      |> Map.put(:slug, Elections.election_slug(election))
+      |> Map.put(:name, Elections.election_name(election))
+      |> Map.put(:month_name, Elections.election_month_name(election))
 
     statements = Statements.list_statements(election)
 

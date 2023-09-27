@@ -151,18 +151,26 @@ defmodule Lzh.Elections do
   ## Examples
 
     iex> election_name(election)
-    "Местни избори (октомври)"
+    "Местни избори"
 
   """
   def election_name(%Election{} = election) do
-    name =
-      Map.get(@types, election.type)
-      |> String.capitalize()
-      |> String.replace("-", " ")
+    Map.get(@types, election.type)
+    |> String.capitalize()
+    |> String.replace("-", " ")
+  end
 
-    month = Enum.at(@months, election.date.month - 1)
+  @doc """
+  Return an election's month name.
 
-    "#{name} (#{month})"
+  ## Examples
+
+    iex> election_name(election)
+    "октомври"
+
+  """
+  def election_month_name(%Election{} = election) do
+    Enum.at(@months, election.date.month - 1)
   end
 
   @doc """
@@ -237,11 +245,13 @@ defmodule Lzh.Elections do
       election
       |> Map.put(:slug, election_slug(election))
       |> Map.put(:name, election_name(election))
+      |> Map.put(:month_name, election_month_name(election))
     end)
     |> Enum.reduce(%{}, fn election, acc ->
       value = Map.get(acc, election.date.year, [])
       Map.put(acc, election.date.year, value ++ [election])
     end)
     |> Enum.to_list()
+    |> Enum.reverse()
   end
 end

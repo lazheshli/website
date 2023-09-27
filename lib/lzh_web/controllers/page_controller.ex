@@ -52,6 +52,8 @@ defmodule LzhWeb.PageController do
   #
 
   defp assign_year_elections(conn, _opts) do
-    assign(conn, :year_elections, Elections.list_year_elections())
+    conn
+    |> assign(:year_elections, Elections.list_year_elections())
+    |> assign(:election, nil)
   end
 end
