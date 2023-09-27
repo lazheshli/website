@@ -52,46 +52,35 @@
         </span>
       </a>
 
-      <span class="block rounded p-2 hover:bg-zinc-200 flex flex-row">
-        <.icon name="hero-folder-open" class="inline-block self-center mr-2 text-zinc-500" />
-        <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
-          Резултати 2023
-        </span>
-      </span>
-      <a
-        href={~p"/избори/1"}
-        title="Местни избори 2023"
-        class="block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row"
-      >
-        <.icon name="hero-magnifying-glass" class="inline-block self-center mr-2 text-zinc-500" />
-        <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
-          Местни избори (октомври)
-        </span>
-      </a>
-      <a
-        href={~p"/избори/1"}
-        title="Парламентарни избори 2023"
-        class="block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row"
-      >
-        <.icon name="hero-magnifying-glass" class="inline-block self-center mr-2 text-zinc-500" />
-        <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
-          Парламентарни избори (март)
-        </span>
-      </a>
+      <%= for {year, elections} <- @year_elections do %>
+        <a
+          class="block rounded p-2 hover:bg-zinc-200 flex flex-row cursor-pointer"
+          phx-click={JS.toggle(to: "#sub-nav-#{year}", time: 0)}
+        >
+          <.icon name="hero-folder-open" class="inline-block self-center mr-2 text-zinc-500" />
+          <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
+            Резултати <%= year %>
+          </span>
+        </a>
 
-      <span class="block rounded p-2 hover:bg-zinc-200 flex flex-row">
-        <.icon name="hero-folder" class="inline-block self-center mr-2 text-zinc-500" />
-        <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
-          Резултати 2022
-        </span>
-      </span>
-
-      <span class="block rounded p-2 hover:bg-zinc-200 flex flex-row">
-        <.icon name="hero-folder" class="inline-block self-center mr-2 text-zinc-500" />
-        <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
-          Резултати 2021
-        </span>
-      </span>
+        <div id={"sub-nav-#{year}"} class="hidden">
+          <%= for election <- elections do %>
+            <a
+              href={~p"/избори/#{election.slug}"}
+              title={election.name}
+              class="block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row"
+            >
+              <.icon
+                name="hero-magnifying-glass"
+                class="inline-block self-center mr-2 text-zinc-500"
+              />
+              <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
+                <%= election.name %>
+              </span>
+            </a>
+          <% end %>
+        </div>
+      <% end %>
 
       <a
         href={~p"/екип"}

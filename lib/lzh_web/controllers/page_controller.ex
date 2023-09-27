@@ -1,6 +1,10 @@
 defmodule LzhWeb.PageController do
   use LzhWeb, :controller
 
+  alias Lzh.Elections
+
+  plug :assign_year_elections
+
   def home(conn, _params) do
     conn
     |> assign(:page_title, "Начало")
@@ -41,5 +45,13 @@ defmodule LzhWeb.PageController do
     conn
     |> assign(:page_title, "Отказ от отговорност")
     |> render(:disclaimer)
+  end
+
+  #
+  # plugs
+  #
+
+  defp assign_year_elections(conn, _opts) do
+    assign(conn, :year_elections, Elections.list_year_elections())
   end
 end

@@ -20,6 +20,15 @@ defmodule Lzh.ElectionsTest do
       assert Elections.get_election!(election.id) == election
     end
 
+    test "get_election_by_slug/1 returns the election with the given slug" do
+      election = election_fixture(%{date: ~D[2023-10-29], type: :local})
+      assert Elections.get_election_by_slug("2023-октомври-местни-избори") == election
+
+      assert Elections.get_election_by_slug("2024-октомври-местни-избори") == nil
+      assert Elections.get_election_by_slug("2023-септември-местни-избори") == nil
+      assert Elections.get_election_by_slug("2023-октомври-парламентарни-избори") == nil
+    end
+
     test "create_election/1 with valid data creates a election" do
       valid_attrs = %{type: :parliamentary, date: ~D[2023-08-18]}
 
@@ -56,6 +65,16 @@ defmodule Lzh.ElectionsTest do
     test "change_election/1 returns a election changeset" do
       election = election_fixture()
       assert %Ecto.Changeset{} = Elections.change_election(election)
+    end
+
+    test "election_name/1 returns an elections's name" do
+      election = election_fixture()
+      assert Elections.election_name(election) == "Парламентарни избори (август)"
+    end
+
+    test "election_slug/1 returns an elections's slug" do
+      election = election_fixture(%{date: ~D[2023-10-29], type: :local})
+      assert Elections.election_slug(election) == "2023-октомври-местни-избори"
     end
   end
 end

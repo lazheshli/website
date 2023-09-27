@@ -6,8 +6,8 @@
     :for={party <- @parties}
     patch={
       if(party.id == @selected_party_id,
-        do: ~p"/избори/#{@election}",
-        else: ~p"/избори/#{@election}?партия=#{party.id}"
+        do: ~p"/избори/#{@election.slug}",
+        else: ~p"/избори/#{@election.slug}?партия=#{party.id}"
       )
     }
     class={[
@@ -25,8 +25,8 @@
     :for={politician <- @politicians}
     patch={
       if(politician.id == @selected_politician_id,
-        do: ~p"/избори/#{@election}",
-        else: ~p"/избори/#{@election}?политик=#{politician.id}"
+        do: ~p"/избори/#{@election.slug}",
+        else: ~p"/избори/#{@election.slug}?политик=#{politician.id}"
       )
     }
     class={[

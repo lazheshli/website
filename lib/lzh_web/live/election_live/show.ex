@@ -4,8 +4,14 @@ defmodule LzhWeb.ElectionLive.Show do
   alias Lzh.{Elections, Statements}
 
   @impl true
-  def mount(%{"id" => id}, _session, socket) do
-    election = Elections.get_election!(id)
+  def mount(%{"slug" => slug}, _session, socket) do
+    election = Elections.get_election_by_slug(slug)
+
+    if is_nil(election) do
+      raise Ecto.NoResultsError
+    end
+
+    election = Map.put(election, :slug, Elections.election_slug(election))
 
     statements = Statements.list_statements(election)
 
@@ -23,6 +29,7 @@ defmodule LzhWeb.ElectionLive.Show do
 
     socket =
       socket
+      |> assign(:year_elections, Elections.list_year_elections())
       |> assign(:election, election)
       |> assign(:politicians, politicians)
       |> assign(:parties, parties)
