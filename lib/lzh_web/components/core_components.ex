@@ -13,6 +13,8 @@ defmodule LzhWeb.CoreComponents do
   how to customize them or feel free to swap in another framework altogether.
 
   Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
+
+  The icons in the footer are provided by [Simple Icons](https://simpleicons.org/).
   """
   use Phoenix.Component
 
@@ -419,7 +421,7 @@ defmodule LzhWeb.CoreComponents do
   def h1(assigns) do
     ~H"""
     <h1 class={[
-      "w-full lg:w-2/3 lg:mx-auto my-10 clear-both leading-snug text-center text-6xl hyphens-auto sm:hyphens-manual uppercase border-b-8 border-black",
+      "w-full lg:w-2/3 lg:mx-auto my-10 clear-both leading-snug text-center text-4xl lg:text-6xl uppercase border-b-8 border-black",
       @class
     ]}>
       <%= render_slot(@inner_block) %>
@@ -437,7 +439,7 @@ defmodule LzhWeb.CoreComponents do
   def h2(assigns) do
     ~H"""
     <h2 class={[
-      "w-fit my-4 clear-both text-3xl leading-snug border-b-2 border-black",
+      "w-fit my-4 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black",
       @class
     ]}>
       <%= render_slot(@inner_block) %>
