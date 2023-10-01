@@ -3,24 +3,26 @@
   <br /> (<%= @election.month_name %> <%= @election.date.year %>)
 </.h1>
 
-<h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
-<div class="flex flex-wrap gap-2 mb-12">
-  <.link
-    :for={party <- @parties}
-    patch={
-      if(party.id == @selected_party_id,
-        do: ~p"/избори/#{@election.slug}",
-        else: ~p"/избори/#{@election.slug}?партия=#{party.id}"
-      )
-    }
-    class={[
-      "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-      if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
-    ]}
-  >
-    <%= party.name %>
-  </.link>
-</div>
+<%= if @election.type == :parliamentary do %>
+  <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
+  <div class="flex flex-wrap gap-2 mb-12">
+    <.link
+      :for={party <- @parties}
+      patch={
+        if(party.id == @selected_party_id,
+          do: ~p"/избори/#{@election.slug}",
+          else: ~p"/избори/#{@election.slug}?партия=#{party.id}"
+        )
+      }
+      class={[
+        "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
+        if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
+      ]}
+    >
+      <%= party.name %>
+    </.link>
+  </div>
+<% end %>
 
 <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения на:</h2>
 <div class="flex flex-wrap gap-2 mb-12">
@@ -34,7 +36,9 @@
     }
     class={[
       "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-      if(politician.id == @selected_politician_id, do: "bg-zinc-700 !text-white")
+      if(politician.id == @selected_politician_id or politician.party_id == @selected_party_id,
+        do: "bg-zinc-700 !text-white"
+      )
     ]}
   >
     <%= politician.name %>
