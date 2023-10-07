@@ -22,7 +22,10 @@
       <a
         href={~p"/"}
         title="Начало"
-        class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        class={[
+          "block rounded p-2 hover:bg-zinc-200 flex flex-row",
+          if(@nav_item == :home, do: "bg-zinc-100")
+        ]}
       >
         <.icon name="hero-home" class="inline-block self-center mr-2 text-zinc-500" />
         <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
@@ -33,7 +36,10 @@
       <a
         href={~p"/за-проекта"}
         title="За проекта"
-        class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        class={[
+          "block rounded p-2 hover:bg-zinc-200 flex flex-row",
+          if(@nav_item == :about, do: "bg-zinc-100")
+        ]}
       >
         <.icon name="hero-light-bulb" class="inline-block self-center mr-2 text-zinc-500" />
         <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
@@ -44,7 +50,10 @@
       <a
         href={~p"/методика"}
         title="Методика"
-        class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        class={[
+          "block rounded p-2 hover:bg-zinc-200 flex flex-row",
+          if(@nav_item == :methodology, do: "bg-zinc-100")
+        ]}
       >
         <.icon name="hero-wrench-screwdriver" class="inline-block self-center mr-2 text-zinc-500" />
         <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
@@ -65,13 +74,18 @@
 
         <div
           id={"sub-nav-#{year}"}
-          class={if(!is_nil(@election) && @election.date.year == year, do: "", else: "hidden")}
+          class={
+            if(@nav_item == :election and @election.date.year == year, do: "", else: "hidden")
+          }
         >
           <%= for election <- elections do %>
             <a
               href={~p"/избори/#{election.slug}"}
               title={"#{election.name} (#{election.month_name} #{election.date.year})"}
-              class="block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row"
+              class={[
+                "block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row",
+                if(@nav_item == :election and @election.id == election.id, do: "bg-zinc-100")
+              ]}
             >
               <.icon
                 name="hero-magnifying-glass"
@@ -88,7 +102,10 @@
       <a
         href={~p"/екип"}
         title="Екип"
-        class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        class={[
+          "block rounded p-2 hover:bg-zinc-200 flex flex-row",
+          if(@nav_item == :team, do: "bg-zinc-100")
+        ]}
       >
         <.icon name="hero-face-smile" class="inline-block self-center mr-2 text-zinc-500" />
         <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
@@ -99,7 +116,10 @@
       <a
         href={~p"/често-задавани-въпроси"}
         title="Често задавани въпроси"
-        class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        class={[
+          "block rounded p-2 hover:bg-zinc-200 flex flex-row",
+          if(@nav_item == :faq, do: "bg-zinc-100")
+        ]}
       >
         <.icon
           name="hero-question-mark-circle"
