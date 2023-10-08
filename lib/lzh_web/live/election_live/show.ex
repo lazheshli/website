@@ -35,7 +35,7 @@ defmodule LzhWeb.ElectionLive.Show do
       |> assign(:parties, parties)
       |> assign(:statements, statements)
       |> assign(:page_title, "Избори")
-      |> assign(:nav_item, :election)
+      |> assign(:action, :election)
       |> assign(:selected_party_id, nil)
       |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, statements)

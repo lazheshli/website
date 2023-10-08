@@ -4,39 +4,35 @@ defmodule LzhWeb.PageController do
   alias Lzh.Elections
 
   plug :assign_year_elections
+  plug :assign_action
 
   def home(conn, _params) do
     conn
     |> assign(:page_title, "Начало")
-    |> assign(:nav_item, :home)
     |> render(:home)
   end
 
   def about(conn, _params) do
     conn
     |> assign(:page_title, "За проекта")
-    |> assign(:nav_item, :about)
     |> render(:about)
   end
 
   def methodology(conn, _params) do
     conn
     |> assign(:page_title, "Методика")
-    |> assign(:nav_item, :methodology)
     |> render(:methodology)
   end
 
   def team(conn, _params) do
     conn
     |> assign(:page_title, "Екип")
-    |> assign(:nav_item, :team)
     |> render(:team)
   end
 
   def faq(conn, _params) do
     conn
     |> assign(:page_title, "Често задавани въпроси")
-    |> assign(:nav_item, :faq)
     |> render(:faq)
   end
 
@@ -60,5 +56,10 @@ defmodule LzhWeb.PageController do
     conn
     |> assign(:year_elections, Elections.list_year_elections())
     |> assign(:election, nil)
+  end
+
+  defp assign_action(conn, _opts) do
+    conn
+    |> assign(:action, action_name(conn))
   end
 end

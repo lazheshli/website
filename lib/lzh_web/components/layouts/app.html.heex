@@ -24,7 +24,7 @@
         title="Начало"
         class={[
           "block rounded p-2 hover:bg-zinc-200 flex flex-row",
-          if(@nav_item == :home, do: "bg-zinc-100")
+          if(@action == :home, do: "bg-zinc-100")
         ]}
       >
         <.icon name="hero-home" class="inline-block self-center mr-2 text-zinc-500" />
@@ -38,7 +38,7 @@
         title="За проекта"
         class={[
           "block rounded p-2 hover:bg-zinc-200 flex flex-row",
-          if(@nav_item == :about, do: "bg-zinc-100")
+          if(@action == :about, do: "bg-zinc-100")
         ]}
       >
         <.icon name="hero-light-bulb" class="inline-block self-center mr-2 text-zinc-500" />
@@ -52,7 +52,7 @@
         title="Методика"
         class={[
           "block rounded p-2 hover:bg-zinc-200 flex flex-row",
-          if(@nav_item == :methodology, do: "bg-zinc-100")
+          if(@action == :methodology, do: "bg-zinc-100")
         ]}
       >
         <.icon name="hero-wrench-screwdriver" class="inline-block self-center mr-2 text-zinc-500" />
@@ -74,9 +74,7 @@
 
         <div
           id={"sub-nav-#{year}"}
-          class={
-            if(@nav_item == :election and @election.date.year == year, do: "", else: "hidden")
-          }
+          class={if(@action == :election and @election.date.year == year, do: "", else: "hidden")}
         >
           <%= for election <- elections do %>
             <a
@@ -84,7 +82,7 @@
               title={"#{election.name} (#{election.month_name} #{election.date.year})"}
               class={[
                 "block ml-6 rounded p-2 hover:bg-zinc-200 flex flex-row",
-                if(@nav_item == :election and @election.id == election.id, do: "bg-zinc-100")
+                if(@action == :election and @election.id == election.id, do: "bg-zinc-100")
               ]}
             >
               <.icon
@@ -104,7 +102,7 @@
         title="Екип"
         class={[
           "block rounded p-2 hover:bg-zinc-200 flex flex-row",
-          if(@nav_item == :team, do: "bg-zinc-100")
+          if(@action == :team, do: "bg-zinc-100")
         ]}
       >
         <.icon name="hero-face-smile" class="inline-block self-center mr-2 text-zinc-500" />
@@ -118,7 +116,7 @@
         title="Често задавани въпроси"
         class={[
           "block rounded p-2 hover:bg-zinc-200 flex flex-row",
-          if(@nav_item == :faq, do: "bg-zinc-100")
+          if(@action == :faq, do: "bg-zinc-100")
         ]}
       >
         <.icon
