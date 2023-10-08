@@ -433,15 +433,19 @@ defmodule LzhWeb.CoreComponents do
   Renders a styled <h2>.
   """
   attr :class, :string, default: nil
+  attr :rest, :global
 
   slot :inner_block, required: true
 
   def h2(assigns) do
     ~H"""
-    <h2 class={[
-      "w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black",
-      @class
-    ]}>
+    <h2
+      class={[
+        "w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black",
+        @class
+      ]}
+      {@rest}
+    >
       <%= render_slot(@inner_block) %>
     </h2>
     """
