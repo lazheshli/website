@@ -1,21 +1,19 @@
 defmodule LzhWeb.ContentComponents do
   use Phoenix.Component
 
-  import LzhWeb.CoreComponents
-
   def election_details(%{year: 2023, month: "април"} = assigns) do
     ~H"""
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой кандидати проверихме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         В рамките на петото издание на проекта <b>„Лъжеш ли?“</b>
         проверихме истиността на изказванията на следните кандидати за народни представители на предсрочните парламентарни избори на 02.04.2023:
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>Бойко Борисов</b> (ГЕРБ-СДС)</li>
         <li><b>Делян Добрев</b> (ГЕРБ-СДС)</li>
         <li><b>Тома Биков</b> (ГЕРБ-СДС)</li>
@@ -42,27 +40,27 @@ defmodule LzhWeb.ContentComponents do
       </ul>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледахме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Обхватът на петото издание на <b>„Лъжеш ли?“</b>
         са предизборните дебати и интервюта в национален ефир, които се проведоха в периода от 03.03.2023 до 31.03.2023. Това включва всички предизборни дебати и интервюта по БНТ, bTV и NOVA.
       </p>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой имаше най-много ефирно време?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Шестте партии и коалиции на 23-мата кандидати в нашата извадка имаха следното ефирно време в рамките на предизборната кампания:
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>Възраждане</b> &mdash; 218 минути</li>
         <li><b>ГЕРБ-СДС</b> &mdash; 182 минути</li>
         <li><b>Продължаваме промяната-Демократична България</b> &mdash; 177 минути</li>
@@ -76,17 +74,17 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2022, month: "октомври"} = assigns) do
     ~H"""
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой кандидати проверихме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         В рамките на четвъртото издание на проекта <b>„Лъжеш ли?“</b>
         проверихме истиността на изказванията на следните кандидати за народни представители на предсрочните парламентарни избори на 02.10.2022:
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>Кирил Петков</b> („Продължаваме промяната“)</li>
         <li><b>Асен Василев</b> („Продължаваме промяната“)</li>
         <li><b>Радостин Василев</b> („Продължаваме промяната“)</li>
@@ -108,12 +106,12 @@ defmodule LzhWeb.ContentComponents do
       </ul>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледахме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Четвъртото издание на <b>„Лъжеш ли?“</b>
         обхвана предизборните дебати и интервюта в национален ефир, които се проведоха в периода от 02.09.2022 до 30.09.2022. Това включва всички предизборни дебати и интервюта по БНТ, bTV и NOVA.
       </p>
@@ -123,17 +121,17 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2021, month: "ноември"} = assigns) do
     ~H"""
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой кандидати проверихме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         В третото издание на <b>„Лъжеш ли?“</b>
         проследихме истинността на изказванията на следните осем кандидати за президент на президентските избори на 14.11.2021:
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>Румен Радев</b> (издигнат от инициативен комитет)</li>
         <li><b>Анастас Герджиков</b> (издигнат от инициативен комитет)</li>
         <li><b>Лозан Панов</b> (издигнат от инициативен комитет)</li>
@@ -145,12 +143,12 @@ defmodule LzhWeb.ContentComponents do
       </ul>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледахме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Третото издание на <b>„Лъжеш ли?“</b>
         обхвана предизборните дебати и интервюта в национален ефир. Това включва изявите на кандидатите за президент по БНТ, bTV и NOVA.
       </p>
@@ -160,12 +158,12 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2021, month: "юли"} = assigns) do
     ~H"""
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой кандидати проверихме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         В рамките на осем анкети попитахме последователите си във
         <a
           href="https://www.facebook.com/lazheshli"
@@ -177,7 +175,7 @@ defmodule LzhWeb.ContentComponents do
         кои кандидати за народни представители на парламентарните избори на 11.07.2021 да следим. От всяка партия с резултат от над 3% на предишните парламентарни избори (04.04.2021) място намериха по петима кандидати, а от останалите по-малки партии добавихме общо петима участници. Проверявахме изказванията на следните кандидати, получили най-много гласове в анкетите:
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li>
           <b>ГЕРБ-СДС</b>: Бойко Борисов, Деница Сачева, Томислав Дончев, Даниел Митов и Десислава Атанасова
         </li>
@@ -205,20 +203,20 @@ defmodule LzhWeb.ContentComponents do
       </ul>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледахме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Анализът ни обхвана всички предизборни дебати по БНТ, bTV и NOVA с участието на кандидати за народни представители и провели се от 11.06.2021 до 04.07.2021. В обхвата попаднаха също така предизборните интервюта в предаванията „Денят започва“ (БНТ), „Лице в лице“ (bTV) и „Здравей, България“ (NOVA).
       </p>
 
-      <p class="pt-4 text-lg">
+      <p class="pb-4 text-lg">
         Следните кандидати нямаха предизборни участия в национален ефир от 11.06.2021 до 04.07.2021.
       </p>
 
-      <ul class="p-4 list-inside list-disc text-lg">
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>ГЕРБ-СДС</b>: Бойко Борисов, Деница Сачева и Десислава Атанасова</li>
         <li><b>„Има такъв народ“</b>: Филип Станев, Андрей Чорбанов и Станислав Балабанов</li>
         <li><b>БСП за България</b>: Георги Кадиев и Кристиан Вигенин</li>
@@ -237,22 +235,22 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2021, month: "април"} = assigns) do
     ~H"""
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой кандидати проверихме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Обектът на анализ по време на кампанията за парламентарните избори на 04.04.2021 бяха всички кандидати за народни представители.
       </p>
     </details>
 
-    <details>
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледахме?
       </summary>
 
-      <p class="text-lg">
+      <p class="pb-4 text-lg">
         Анализът ни обхвана всички предизборни дебати по БНТ, bTV и NOVA с участието на кандидати за народни представители и провели се от 05.03.2021 до 26.03.2021.
       </p>
 

@@ -23,7 +23,7 @@
 <% else %>
   <.election_details year={@election.date.year} month={@election.month_name} />
 
-  <.h2>Резултати</.h2>
+  <.h2 class="mt-10">Резултати</.h2>
 
   <%= if @election.type == :parliamentary do %>
     <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>

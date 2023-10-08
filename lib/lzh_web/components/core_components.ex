@@ -441,7 +441,7 @@ defmodule LzhWeb.CoreComponents do
     ~H"""
     <h2
       class={[
-        "w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black",
+        "w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug",
         @class
       ]}
       {@rest}
