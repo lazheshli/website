@@ -1,6 +1,55 @@
 defmodule LzhWeb.ContentComponents do
   use Phoenix.Component
 
+  def election_details(%{year: 2023, month: "октомври"} = assigns) do
+    ~H"""
+    <details open class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кой кандидати проверяваме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        В рамките на настоящото издание на проекта <b>„Лъжеш ли?“</b>
+        проверяваме истиността на изказванията на следните кандидати за кметове на местните избори на 29.10.2023:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">София</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Антон Хекимян (ГЕРБ-СДС)</li>
+        <li>Васил Терзиев (ПП-ДБ и „Спаси София“)</li>
+        <li>Ваня Григорова
+          (БСП за България, „Левицата!“, Неутрална България, Алтернативата на гражданите и Атака)</li>
+        <li>Деян Николов (Възраждане)</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Пловдив</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Костадин Димитров (ГЕРБ)</li>
+        <li>Славчо Атанасов (ПП-ДБ)</li>
+        <li>Ивайло Старибратов (Съединени за Пловдив)</li>
+        <li>Ангел Георгиев (Възраждане)</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Варна</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Иван Портних (ГЕРБ-СДС)</li>
+        <li>Благомир Коцев (ПП-ДБ)</li>
+        <li>Коста Стоянов (Възраждане)</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Бургас</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Димитър Николов (ГЕРБ)</li>
+        <li>Константин Бачийски (Средна европейска класа)</li>
+      </ul>
+    </details>
+    """
+  end
+
   def election_details(%{year: 2023, month: "април"} = assigns) do
     ~H"""
     <details class="mb-6">
