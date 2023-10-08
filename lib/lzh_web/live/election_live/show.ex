@@ -4,14 +4,8 @@ defmodule LzhWeb.ElectionLive.Show do
   alias Lzh.{Elections, Statements}
 
   @impl true
-  def mount(%{"slug" => slug}, _session, socket) do
-    election = Elections.get_election_by_slug(slug)
-
-    election =
-      election
-      |> Map.put(:slug, Elections.election_slug(election))
-      |> Map.put(:name, Elections.election_name(election))
-      |> Map.put(:month_name, Elections.election_month_name(election))
+  def mount(:not_mounted_at_router, %{"election" => election_id}, socket) do
+    election = Elections.get_election!(election_id)
 
     statements = Statements.list_statements(election)
 
@@ -29,13 +23,10 @@ defmodule LzhWeb.ElectionLive.Show do
 
     socket =
       socket
-      |> assign(:year_elections, Elections.list_year_elections())
       |> assign(:election, election)
       |> assign(:politicians, politicians)
       |> assign(:parties, parties)
       |> assign(:statements, statements)
-      |> assign(:page_title, "Избори")
-      |> assign(:action, :election)
       |> assign(:selected_party_id, nil)
       |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, statements)
@@ -44,37 +35,47 @@ defmodule LzhWeb.ElectionLive.Show do
   end
 
   @impl true
-  def handle_params(params, _uri, socket) do
-    %{politicians: politicians, parties: parties, statements: statements} = socket.assigns
+  def handle_event("select_party", %{"party" => selected_party_id}, socket) do
+    %{statements: statements} = socket.assigns
 
-    selected_politician_id = get_selected_id(params, "политик", politicians)
-    selected_party_id = get_selected_id(params, "партия", parties)
+    selected_party_id = String.to_integer(selected_party_id)
 
     selected_statements =
-      statements
-      |> Enum.filter(fn statement ->
-        selected_politician_id == nil or statement.politician.id == selected_politician_id
-      end)
-      |> Enum.filter(fn statement ->
-        selected_party_id == nil or statement.politician.party.id == selected_party_id
+      Enum.filter(statements, fn statement ->
+        statement.politician.party.id == selected_party_id
       end)
 
     socket =
       socket
-      |> assign(:selected_politician_id, selected_politician_id)
       |> assign(:selected_party_id, selected_party_id)
+      |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, selected_statements)
 
     {:noreply, socket}
   end
 
-  defp get_selected_id(params, key, list) do
-    with %{^key => string_id} <- params,
-         {id, ""} <- Integer.parse(string_id),
-         true <- Enum.any?(list, fn item -> item.id == id end) do
-      id
-    else
-      _ -> nil
-    end
+  @impl true
+  def handle_event("select_politician", %{"politician" => selected_politician_id}, socket) do
+    %{statements: statements} = socket.assigns
+
+    selected_politician_id = String.to_integer(selected_politician_id)
+
+    selected_statements =
+      Enum.filter(statements, fn statement ->
+        statement.politician.id == selected_politician_id
+      end)
+
+    socket =
+      socket
+      |> assign(:selected_party_id, nil)
+      |> assign(:selected_politician_id, selected_politician_id)
+      |> assign(:selected_statements, selected_statements)
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event(_event, _params, socket) do
+    {:noreply, socket}
   end
 end

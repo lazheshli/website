@@ -21,12 +21,11 @@ defmodule LzhWeb.Router do
     get "/начало", PageController, :home
     get "/за-проекта", PageController, :about
     get "/методика", PageController, :methodology
+    get "/избори/:slug", PageController, :election
     get "/екип", PageController, :team
     get "/често-задавани-въпроси", PageController, :faq
     get "/политика-за-поверителност", PageController, :privacy_policy
     get "/отказ-от-отговорност", PageController, :disclaimer
-
-    live "/избори/:slug", ElectionLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

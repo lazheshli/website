@@ -1,150 +1,114 @@
-<.h1>
-  <%= @election.name %>
-  <br /> (<%= @election.month_name %> <%= @election.date.year %>)
-</.h1>
-
-<.election_details year={@election.date.year} month={@election.month_name} />
-
-<.h2 class="mt-10">Резултати</.h2>
-
-<%= if Enum.empty?(@statements) do %>
-  <p class="text-lg">
-    Резултатите ще публикуваме скоро!
-    За акценти от предизборната кампания следете страниците ни във
-    <a
-      href="https://www.facebook.com/lazheshli"
-      title="Последвай ни във Facebook"
-      class="underline"
-    >
-      Facebook
-    </a>
-    и <a
-      href="https://www.instagram.com/lazheshli/"
-      title="Последвай ни в Instagram"
-      class="underline"
-    >Instagram</a>.
-  </p>
-<% else %>
-  <%= if @election.type == :parliamentary do %>
-    <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
-    <div class="flex flex-wrap gap-2 mb-12">
-      <.link
-        :for={party <- @parties}
-        patch={
-          if(party.id == @selected_party_id,
-            do: ~p"/избори/#{@election.slug}",
-            else: ~p"/избори/#{@election.slug}?партия=#{party.id}"
-          )
-        }
-        class={[
-          "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-          if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
-        ]}
-      >
-        <%= party.name %>
-      </.link>
-    </div>
-  <% end %>
-
-  <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения на:</h2>
+<%= if @election.type == :parliamentary do %>
+  <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
   <div class="flex flex-wrap gap-2 mb-12">
-    <.link
-      :for={politician <- @politicians}
-      patch={
-        if(politician.id == @selected_politician_id,
-          do: ~p"/избори/#{@election.slug}",
-          else: ~p"/избори/#{@election.slug}?политик=#{politician.id}"
-        )
-      }
+    <button
+      :for={party <- @parties}
+      phx-click="select_party"
+      phx-value-party={party.id}
       class={[
         "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-        if(politician.id == @selected_politician_id or politician.party_id == @selected_party_id,
-          do: "bg-zinc-700 !text-white"
-        )
+        if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
       ]}
     >
-      <%= politician.name %>
-    </.link>
+      <%= party.name %>
+    </button>
   </div>
+<% end %>
 
-  <h2 class="text-xl leading-8 mb-4">Неверни твърдения</h2>
-  <div
-    :for={statement <- @selected_statements}
-    class="w-full p-6 rounded-md border-2 border-zinc-200 my-4"
+<h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения на:</h2>
+<div class="flex flex-wrap gap-2 mb-12">
+  <button
+    :for={politician <- @politicians}
+    phx-click="select_politician"
+    phx-value-politician={politician.id}
+    class={[
+      "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
+      if(politician.id == @selected_politician_id or politician.party_id == @selected_party_id,
+        do: "bg-zinc-700 !text-white"
+      )
+    ]}
   >
-    <div class="w-full flex flex-row flex-wrap">
-      <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
-        <.icon name="hero-user" class="block w-6 h-6 mt-1 mr-2" />
-        <dl class="basis-full">
-          <dt class="text-zinc-500">Кандидат</dt>
-          <dd>
-            <span class=""><%= statement.politician.name %></span>
-            (<%= statement.politician.party.name %>)
-          </dd>
-        </dl>
-      </div>
+    <%= politician.name %>
+  </button>
+</div>
 
-      <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
-        <.icon name="hero-tv" class="block w-6 h-6 mt-1 mr-2" />
-        <dl class="basis-full">
-          <dt class="text-zinc-500">Предаване</dt>
-          <dd>
-            <%= statement.tv_show %> (<a
-              href={statement.tv_show_url}
-              class="underline"
-              title="Връзка към предаването"
-            >връзка</a>)
-          </dd>
-        </dl>
-      </div>
-
-      <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
-        <.icon name="hero-calendar-days" class="block w-6 h-6 mt-1 mr-2" />
-        <dl class="basis-full">
-          <dt class="text-zinc-500">Дата на излъчване</dt>
-          <dd><%= statement.date %></dd>
-        </dl>
-      </div>
-
-      <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
-        <.icon name="hero-clock" class="block w-6 h-6 mt-1 mr-2" />
-        <dl class="basis-full">
-          <dt class="text-zinc-500">Минута на изказване</dt>
-          <dd>
-            <%= statement.tv_show_minute %> мин.
-          </dd>
-        </dl>
-      </div>
-    </div>
-
-    <div class="w-full mb-4 flex flex-row">
-      <.icon name="hero-chat-bubble-left-ellipsis" class="block w-6 h-6 mt-1 mr-2" />
+<h2 class="text-xl leading-8 mb-4">Неверни твърдения</h2>
+<div
+  :for={statement <- @selected_statements}
+  class="w-full p-6 rounded-md border-2 border-zinc-200 my-4"
+>
+  <div class="w-full flex flex-row flex-wrap">
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-user" class="block w-6 h-6 mt-1 mr-2" />
       <dl class="basis-full">
-        <dt class="text-zinc-500">Невярно твърдение</dt>
-        <dd><%= statement.statement %></dd>
-      </dl>
-    </div>
-
-    <div class="w-full mb-4 flex flex-row">
-      <.icon name="hero-check-circle" class="block w-6 h-6 mt-1 mr-2" />
-      <dl class="basis-full">
-        <dt class="text-zinc-500">Нашата аргументация</dt>
-        <dd><%= statement.response %></dd>
-      </dl>
-    </div>
-
-    <div class="w-full flex flex-row">
-      <.icon name="hero-book-open" class="block w-6 h-6 mt-1 mr-2" />
-      <dl class="basis-full">
-        <dt class="text-zinc-500">Източници</dt>
+        <dt class="text-zinc-500">Кандидат</dt>
         <dd>
-          <ul class="list-inside list-disc">
-            <li :for={source <- statement.sources}>
-              <a href={source} target="_blank" class="underline break-all"><%= source %></a>
-            </li>
-          </ul>
+          <span class=""><%= statement.politician.name %></span>
+          (<%= statement.politician.party.name %>)
+        </dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-tv" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Предаване</dt>
+        <dd>
+          <%= statement.tv_show %> (<a
+            href={statement.tv_show_url}
+            class="underline"
+            title="Връзка към предаването"
+          >връзка</a>)
+        </dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-calendar-days" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Дата на излъчване</dt>
+        <dd><%= statement.date %></dd>
+      </dl>
+    </div>
+
+    <div class="basis-1/2 xl:basis-1/4 grow mb-4 flex flex-row">
+      <.icon name="hero-clock" class="block w-6 h-6 mt-1 mr-2" />
+      <dl class="basis-full">
+        <dt class="text-zinc-500">Минута на изказване</dt>
+        <dd>
+          <%= statement.tv_show_minute %> мин.
         </dd>
       </dl>
     </div>
   </div>
-<% end %>
+
+  <div class="w-full mb-4 flex flex-row">
+    <.icon name="hero-chat-bubble-left-ellipsis" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Невярно твърдение</dt>
+      <dd><%= statement.statement %></dd>
+    </dl>
+  </div>
+
+  <div class="w-full mb-4 flex flex-row">
+    <.icon name="hero-check-circle" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Нашата аргументация</dt>
+      <dd><%= statement.response %></dd>
+    </dl>
+  </div>
+
+  <div class="w-full flex flex-row">
+    <.icon name="hero-book-open" class="block w-6 h-6 mt-1 mr-2" />
+    <dl class="basis-full">
+      <dt class="text-zinc-500">Източници</dt>
+      <dd>
+        <ul class="list-inside list-disc">
+          <li :for={source <- statement.sources}>
+            <a href={source} target="_blank" class="underline break-all"><%= source %></a>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</div>

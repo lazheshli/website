@@ -52,7 +52,7 @@ defmodule LzhWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LzhWeb.Layouts, :app}
+        layout: {LzhWeb.Layouts, :live}
 
       unquote(html_helpers())
     end
