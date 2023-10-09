@@ -1,38 +1,74 @@
 <%= if @election.type == :parliamentary do %>
-  <h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения от:</h2>
-  <div class="flex flex-wrap gap-2 mb-12">
+  <div
+    :for={party <- @parties}
+    class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap"
+  >
     <button
-      :for={party <- @parties}
-      phx-click="select_party"
+      phx-click="toggle_party"
       phx-value-party={party.id}
       class={[
-        "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-        if(party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
+        "py-2 px-3 bg-zinc-200 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+        if(@selected_all or party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
       ]}
     >
+      <%= if @selected_all or party.id == @selected_party_id do %>
+        <.icon name="hero-check" />
+      <% end %>
       <%= party.name %>
+    </button>
+
+    <button
+      :for={politician <- Enum.filter(@politicians, &(&1.party_id == party.id))}
+      phx-click="toggle_politician"
+      phx-value-politician={politician.id}
+      class={[
+        "py-2 px-3 bg-zinc-100 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+        if(
+          @selected_all or politician.id == @selected_politician_id or
+            politician.party_id == @selected_party_id,
+          do: "bg-zinc-600 !text-white"
+        )
+      ]}
+    >
+      <%= if @selected_all or politician.id == @selected_politician_id or politician.party_id == @selected_party_id do %>
+        <.icon name="hero-check" class="h-100" />
+      <% end %>
+      <%= politician.name %>
     </button>
   </div>
 <% end %>
 
-<h2 class="text-xl leading-8 mb-4">Покажи само неверните твърдения на:</h2>
-<div class="flex flex-wrap gap-2 mb-12">
-  <button
-    :for={politician <- @politicians}
-    phx-click="select_politician"
-    phx-value-politician={politician.id}
-    class={[
-      "rounded-lg bg-zinc-200 hover:bg-zinc-700 py-2 px-3 text-sm font-semibold leading-6 text-zinc-900 hover:text-white",
-      if(politician.id == @selected_politician_id or politician.party_id == @selected_party_id,
-        do: "bg-zinc-700 !text-white"
-      )
-    ]}
-  >
-    <%= politician.name %>
-  </button>
-</div>
+<%= if @election.type == :presidential do %>
+  <div class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap">
+    <button
+      :for={politician <- @politicians}
+      phx-click="toggle_politician"
+      phx-value-politician={politician.id}
+      class={[
+        "py-2 px-3 bg-zinc-100 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+        if(
+          @selected_all or politician.id == @selected_politician_id,
+          do: "bg-zinc-600 !text-white"
+        )
+      ]}
+    >
+      <%= if @selected_all or politician.id == @selected_politician_id do %>
+        <.icon name="hero-check" class="h-100" />
+      <% end %>
+      <%= politician.name %>
+    </button>
+  </div>
+<% end %>
 
-<h2 class="text-xl leading-8 mb-4">Неверни твърдения</h2>
+<h2 class="mt-10 mb-4 text-xl leading-8">
+  <%= Enum.count(@selected_statements) %>
+  <%= if Enum.count(@selected_statements) == 1 do %>
+    невярно твърдение
+  <% else %>
+    неверни твърдения
+  <% end %>
+</h2>
+
 <div
   :for={statement <- @selected_statements}
   class="w-full p-6 rounded-md border-2 border-zinc-200 my-4"

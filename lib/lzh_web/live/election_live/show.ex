@@ -27,6 +27,7 @@ defmodule LzhWeb.ElectionLive.Show do
       |> assign(:politicians, politicians)
       |> assign(:parties, parties)
       |> assign(:statements, statements)
+      |> assign(:selected_all, true)
       |> assign(:selected_party_id, nil)
       |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, statements)
@@ -35,41 +36,59 @@ defmodule LzhWeb.ElectionLive.Show do
   end
 
   @impl true
-  def handle_event("select_party", %{"party" => selected_party_id}, socket) do
-    %{statements: statements} = socket.assigns
+  def handle_event("toggle_party", %{"party" => toggled_party_id}, socket) do
+    %{selected_party_id: selected_party_id, statements: statements} = socket.assigns
 
-    selected_party_id = String.to_integer(selected_party_id)
-
-    selected_statements =
-      Enum.filter(statements, fn statement ->
-        statement.politician.party.id == selected_party_id
-      end)
+    toggled_party_id = String.to_integer(toggled_party_id)
 
     socket =
-      socket
-      |> assign(:selected_party_id, selected_party_id)
-      |> assign(:selected_politician_id, nil)
-      |> assign(:selected_statements, selected_statements)
+      if toggled_party_id == selected_party_id do
+        socket
+        |> assign(:selected_all, true)
+        |> assign(:selected_party_id, nil)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, statements)
+      else
+        selected_statements =
+          Enum.filter(statements, fn statement ->
+            statement.politician.party.id == toggled_party_id
+          end)
+
+        socket
+        |> assign(:selected_all, false)
+        |> assign(:selected_party_id, toggled_party_id)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, selected_statements)
+      end
 
     {:noreply, socket}
   end
 
   @impl true
-  def handle_event("select_politician", %{"politician" => selected_politician_id}, socket) do
-    %{statements: statements} = socket.assigns
+  def handle_event("toggle_politician", %{"politician" => toggled_politician_id}, socket) do
+    %{selected_politician_id: selected_politician_id, statements: statements} = socket.assigns
 
-    selected_politician_id = String.to_integer(selected_politician_id)
-
-    selected_statements =
-      Enum.filter(statements, fn statement ->
-        statement.politician.id == selected_politician_id
-      end)
+    toggled_politician_id = String.to_integer(toggled_politician_id)
 
     socket =
-      socket
-      |> assign(:selected_party_id, nil)
-      |> assign(:selected_politician_id, selected_politician_id)
-      |> assign(:selected_statements, selected_statements)
+      if toggled_politician_id == selected_politician_id do
+        socket
+        |> assign(:selected_all, true)
+        |> assign(:selected_party_id, nil)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, statements)
+      else
+        selected_statements =
+          Enum.filter(statements, fn statement ->
+            statement.politician.id == toggled_politician_id
+          end)
+
+        socket
+        |> assign(:selected_all, false)
+        |> assign(:selected_party_id, nil)
+        |> assign(:selected_politician_id, toggled_politician_id)
+        |> assign(:selected_statements, selected_statements)
+      end
 
     {:noreply, socket}
   end

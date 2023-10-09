@@ -7,7 +7,7 @@
 
 <.h2 class="mt-10">Резултати</.h2>
 
-<%= if Date.before?(Date.utc_today(), @election.date) do %>
+<%= if Date.compare(Date.utc_today(), @election.date) == :lt do %>
   <p class="text-lg">
     Резултатите ще публикуваме скоро!
     За акценти от предизборната кампания следете страниците ни във
