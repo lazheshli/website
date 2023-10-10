@@ -5,7 +5,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details open class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверяваме?
+        Кои кандидати проверяваме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -54,7 +54,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверихме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -125,7 +125,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверихме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -172,7 +172,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверихме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -209,7 +209,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверихме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -286,7 +286,7 @@ defmodule LzhWeb.ContentComponents do
     ~H"""
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кой кандидати проверихме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
