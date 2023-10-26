@@ -1,45 +1,94 @@
 <%= if @election.type == :parliamentary do %>
-  <div
-    :for={party <- @parties}
-    class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap"
-  >
-    <button
-      phx-click="toggle_party"
-      phx-value-party={party.id}
-      class={[
-        "py-2 px-3 bg-zinc-200 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
-        if(@selected_all or party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
-      ]}
-    >
-      <%= if @selected_all or party.id == @selected_party_id do %>
-        <.icon name="hero-check" />
-      <% end %>
-      <%= party.name %>
-    </button>
+  <form phx-change="select_party" class="lg:hidden mb-4">
+    <label for="select-party" class="block">
+      Филтрирай по партия
+    </label>
 
-    <button
-      :for={politician <- Enum.filter(@politicians, &(&1.party_id == party.id))}
-      phx-click="toggle_politician"
-      phx-value-politician={politician.id}
-      class={[
-        "py-2 px-3 bg-zinc-100 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
-        if(
-          @selected_all or politician.id == @selected_politician_id or
-            politician.party_id == @selected_party_id,
-          do: "bg-zinc-600 !text-white"
-        )
-      ]}
+    <select name="party" id="select-party">
+      <option value={0} selected={@selected_party_id == nil}>Покажи всички</option>
+      <option :for={party <- @parties} value={party.id} selected={party.id == @selected_party_id}>
+        <%= party.name %>
+      </option>
+    </select>
+  </form>
+
+  <form phx-change="select_politician" class="lg:hidden mb-4">
+    <label for="select-politician" class="block">
+      Филтрирай по политик
+    </label>
+
+    <select name="politician" id="select-politician">
+      <option value={0} selected={@selected_politician_id == nil}>Покажи всички</option>
+      <option
+        :for={politician <- filter_by_party(@politicians, @selected_party_id)}
+        value={politician.id}
+        selected={politician.id == @selected_politician_id}
+      >
+        <%= politician.name %>
+      </option>
+    </select>
+  </form>
+
+  <div class="hidden lg:block">
+    <div
+      :for={party <- @parties}
+      class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap"
     >
-      <%= if @selected_all or politician.id == @selected_politician_id or politician.party_id == @selected_party_id do %>
-        <.icon name="hero-check" class="h-100" />
-      <% end %>
-      <%= politician.name %>
-    </button>
+      <button
+        phx-click="toggle_party"
+        phx-value-party={party.id}
+        class={[
+          "py-2 px-3 bg-zinc-200 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+          if(@selected_all or party.id == @selected_party_id, do: "bg-zinc-700 !text-white")
+        ]}
+      >
+        <%= if @selected_all or party.id == @selected_party_id do %>
+          <.icon name="hero-check" />
+        <% end %>
+        <%= party.name %>
+      </button>
+
+      <button
+        :for={politician <- Enum.filter(@politicians, &(&1.party_id == party.id))}
+        phx-click="toggle_politician"
+        phx-value-politician={politician.id}
+        class={[
+          "py-2 px-3 bg-zinc-100 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+          if(
+            @selected_all or politician.id == @selected_politician_id or
+              politician.party_id == @selected_party_id,
+            do: "bg-zinc-600 !text-white"
+          )
+        ]}
+      >
+        <%= if @selected_all or politician.id == @selected_politician_id or politician.party_id == @selected_party_id do %>
+          <.icon name="hero-check" class="h-100" />
+        <% end %>
+        <%= politician.name %>
+      </button>
+    </div>
   </div>
 <% end %>
 
 <%= if @election.type == :presidential do %>
-  <div class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap">
+  <form phx-change="select_politician" class="lg:hidden mb-4">
+    <label for="select-politician" class="block">
+      Филтрирай по политик
+    </label>
+
+    <select name="politician" id="select-politician">
+      <option value={0} selected={@selected_politician_id == nil}>Покажи всички</option>
+      <option
+        :for={politician <- @politicians}
+        value={politician.id}
+        selected={politician.id == @selected_politician_id}
+      >
+        <%= politician.name %>
+      </option>
+    </select>
+  </form>
+
+  <div class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap hidden lg:block">
     <button
       :for={politician <- @politicians}
       phx-click="toggle_politician"
