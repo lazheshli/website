@@ -164,6 +164,20 @@ defmodule LzhWeb.ElectionLive.Show do
   end
 
   @impl true
+  def handle_event("select_all", _params, socket) do
+    %{statements: statements} = socket.assigns
+
+    socket =
+      socket
+      |> assign(:selected_all, true)
+      |> assign(:selected_party_id, nil)
+      |> assign(:selected_politician_id, nil)
+      |> assign(:selected_statements, statements)
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event(_event, _params, socket) do
     {:noreply, socket}
   end
