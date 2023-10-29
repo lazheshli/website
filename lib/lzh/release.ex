@@ -52,7 +52,11 @@ defmodule Lzh.Release do
       case Lzh.Politicians.get_politician(row_data["politician"], party) do
         nil ->
           {:ok, politician} =
-            Lzh.Politicians.create_politician(%{name: row_data["politician"], party_id: party.id})
+            Lzh.Politicians.create_politician(%{
+              name: row_data["politician"],
+              party_id: party.id,
+              town: Map.get(row_data, "town", "")
+            })
 
           politician
 

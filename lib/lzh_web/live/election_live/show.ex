@@ -25,14 +25,22 @@ defmodule LzhWeb.ElectionLive.Show do
       |> Enum.into(MapSet.new())
       |> Enum.sort_by(& &1.name)
 
+    towns =
+      politicians
+      |> Enum.map(fn politician -> politician.town end)
+      |> Enum.into(MapSet.new())
+      |> Enum.sort()
+
     socket =
       socket
       |> assign(:election, election)
       |> assign(:politicians, politicians)
       |> assign(:parties, parties)
+      |> assign(:towns, towns)
       |> assign(:statements, statements)
       |> assign(:selected_all, true)
       |> assign(:selected_party_id, nil)
+      |> assign(:selected_town, nil)
       |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, statements)
 
@@ -57,16 +65,39 @@ defmodule LzhWeb.ElectionLive.Show do
         |> assign(:selected_politician_id, nil)
         |> assign(:selected_statements, statements)
       else
-        selected_statements =
-          Enum.filter(statements, fn statement ->
-            statement.politician.party.id == toggled_party_id
-          end)
-
         socket
         |> assign(:selected_all, false)
         |> assign(:selected_party_id, toggled_party_id)
         |> assign(:selected_politician_id, nil)
-        |> assign(:selected_statements, selected_statements)
+        |> assign(
+          :selected_statements,
+          Enum.filter(statements, &(&1.politician.party.id == toggled_party_id))
+        )
+      end
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("toggle_town", %{"town" => toggled_town}, socket) do
+    %{selected_town: selected_town, statements: statements} = socket.assigns
+
+    socket =
+      if toggled_town == selected_town do
+        socket
+        |> assign(:selected_all, true)
+        |> assign(:selected_town, nil)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, statements)
+      else
+        socket
+        |> assign(:selected_all, false)
+        |> assign(:selected_town, toggled_town)
+        |> assign(:selected_politician_id, nil)
+        |> assign(
+          :selected_statements,
+          Enum.filter(statements, &(&1.politician.town == toggled_town))
+        )
       end
 
     {:noreply, socket}
@@ -83,19 +114,19 @@ defmodule LzhWeb.ElectionLive.Show do
         socket
         |> assign(:selected_all, true)
         |> assign(:selected_party_id, nil)
+        |> assign(:selected_town, nil)
         |> assign(:selected_politician_id, nil)
         |> assign(:selected_statements, statements)
       else
-        selected_statements =
-          Enum.filter(statements, fn statement ->
-            statement.politician.id == toggled_politician_id
-          end)
-
         socket
         |> assign(:selected_all, false)
         |> assign(:selected_party_id, nil)
+        |> assign(:selected_town, nil)
         |> assign(:selected_politician_id, toggled_politician_id)
-        |> assign(:selected_statements, selected_statements)
+        |> assign(
+          :selected_statements,
+          Enum.filter(statements, &(&1.politician.id == toggled_politician_id))
+        )
       end
 
     {:noreply, socket}
@@ -115,16 +146,36 @@ defmodule LzhWeb.ElectionLive.Show do
         |> assign(:selected_politician_id, nil)
         |> assign(:selected_statements, statements)
       else
-        selected_statements =
-          Enum.filter(statements, fn statement ->
-            statement.politician.party.id == party_id
-          end)
-
         socket
         |> assign(:selected_all, false)
         |> assign(:selected_party_id, party_id)
         |> assign(:selected_politician_id, nil)
-        |> assign(:selected_statements, selected_statements)
+        |> assign(
+          :selected_statements,
+          Enum.filter(statements, &(&1.politician.party.id == party_id))
+        )
+      end
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("select_town", %{"town" => town}, socket) do
+    %{statements: statements} = socket.assigns
+
+    socket =
+      if town == "-" do
+        socket
+        |> assign(:selected_all, true)
+        |> assign(:selected_town, nil)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, statements)
+      else
+        socket
+        |> assign(:selected_all, false)
+        |> assign(:selected_town, town)
+        |> assign(:selected_politician_id, nil)
+        |> assign(:selected_statements, Enum.filter(statements, &(&1.politician.town == town)))
       end
 
     {:noreply, socket}
@@ -132,32 +183,56 @@ defmodule LzhWeb.ElectionLive.Show do
 
   @impl true
   def handle_event("select_politician", %{"politician" => politician_id}, socket) do
-    %{politicians: politicians, statements: statements} = socket.assigns
+    %{
+      election: election,
+      politicians: politicians,
+      statements: statements,
+      selected_party_id: selected_party_id,
+      selected_town: selected_town
+    } = socket.assigns
 
     politician_id = String.to_integer(politician_id)
 
     socket =
-      if politician_id == 0 do
-        socket
-        |> assign(:selected_all, true)
-        |> assign(:selected_politician_id, nil)
-        |> assign(:selected_statements, statements)
-      else
-        selected_statements =
-          Enum.filter(statements, fn statement ->
-            statement.politician.id == politician_id
-          end)
+      cond do
+        politician_id == 0 and election.type == :parliamentary and selected_party_id != nil ->
+          socket
+          |> assign(:selected_all, false)
+          |> assign(:selected_politician_id, nil)
+          |> assign(
+            :selected_statements,
+            Enum.filter(statements, &(&1.politician.party_id == selected_party_id))
+          )
 
-        party_id =
-          politicians
-          |> Enum.find(&(&1.id == politician_id))
-          |> Map.get(:party_id)
+        politician_id == 0 and election.type == :local and selected_town != nil ->
+          socket
+          |> assign(:selected_all, false)
+          |> assign(:selected_politician_id, nil)
+          |> assign(
+            :selected_statements,
+            Enum.filter(statements, &(&1.politician.town == selected_town))
+          )
 
-        socket
-        |> assign(:selected_all, false)
-        |> assign(:selected_party_id, party_id)
-        |> assign(:selected_politician_id, politician_id)
-        |> assign(:selected_statements, selected_statements)
+        politician_id == 0 ->
+          socket
+          |> assign(:selected_all, true)
+          |> assign(:selected_party_id, nil)
+          |> assign(:selected_town, nil)
+          |> assign(:selected_politician_id, nil)
+          |> assign(:selected_statements, statements)
+
+        true ->
+          politician = Enum.find(politicians, &(&1.id == politician_id))
+
+          socket
+          |> assign(:selected_all, false)
+          |> assign(:selected_party_id, politician.party_id)
+          |> assign(:selected_town, politician.town)
+          |> assign(:selected_politician_id, politician_id)
+          |> assign(
+            :selected_statements,
+            Enum.filter(statements, &(&1.politician.id == politician_id))
+          )
       end
 
     {:noreply, socket}
@@ -171,6 +246,7 @@ defmodule LzhWeb.ElectionLive.Show do
       socket
       |> assign(:selected_all, true)
       |> assign(:selected_party_id, nil)
+      |> assign(:selected_town, nil)
       |> assign(:selected_politician_id, nil)
       |> assign(:selected_statements, statements)
 
@@ -191,6 +267,14 @@ defmodule LzhWeb.ElectionLive.Show do
   end
 
   def filter_by_party(politicians, nil) do
+    politicians
+  end
+
+  def filter_by_town(politicians, town) when is_binary(town) do
+    Enum.filter(politicians, &(&1.town == town))
+  end
+
+  def filter_by_town(politicians, nil) do
     politicians
   end
 end

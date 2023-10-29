@@ -13,11 +13,11 @@
   </form>
 
   <form phx-change="select_politician" class="lg:hidden mb-4">
-    <label for="select-politician" class="block">
+    <label for={"select-politician-#{@selected_party_id}"} class="block">
       Филтрирай по политик
     </label>
 
-    <select name="politician" id="select-politician">
+    <select name="politician" id={"select-politician-#{@selected_party_id}"}>
       <option value={0} selected={@selected_politician_id == nil}>Покажи всички</option>
       <option
         :for={politician <- filter_by_party(@politicians, @selected_party_id)}
@@ -62,7 +62,7 @@
       </button>
 
       <button
-        :for={politician <- Enum.filter(@politicians, &(&1.party_id == party.id))}
+        :for={politician <- filter_by_party(@politicians, party.id)}
         phx-click="toggle_politician"
         phx-value-politician={politician.id}
         class={[
@@ -129,6 +129,95 @@
         ]}
       >
         <%= if @selected_all or politician.id == @selected_politician_id do %>
+          <.icon name="hero-check" class="h-100" />
+        <% end %>
+        <%= politician.name %>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<%= if @election.type == :local do %>
+  <form phx-change="select_town" class="lg:hidden mb-4">
+    <label for="select-town" class="block">
+      Филтрирай по град
+    </label>
+
+    <select name="town" id="select-town">
+      <option value="-" selected={@selected_town == nil}>Покажи всички</option>
+      <option :for={town <- @towns} value={town} selected={town == @selected_town}>
+        <%= town %>
+      </option>
+    </select>
+  </form>
+
+  <form phx-change="select_politician" class="lg:hidden mb-4">
+    <label for={"select-politician-#{@selected_town}"} class="block">
+      Филтрирай по политик
+    </label>
+
+    <select name="politician" id={"select-politician-#{@selected_town}"}>
+      <option value={0} selected={@selected_politician_id == nil}>
+        Покажи всички<%= if @selected_town != nil do %>
+          от <%= @selected_town %>
+        <% end %>
+      </option>
+      <option
+        :for={politician <- filter_by_town(@politicians, @selected_town)}
+        value={politician.id}
+        selected={politician.id == @selected_politician_id}
+      >
+        <%= politician.name %>
+      </option>
+    </select>
+  </form>
+
+  <div class="hidden lg:block">
+    <span class="block mb-3">
+      Филтрирай по политик или град
+      <a
+        :if={@selected_all == false}
+        phx-click="select_all"
+        href="#"
+        title="Премахни избраните филтри"
+        class="underline"
+      >
+        (избери всички)
+      </a>
+    </span>
+
+    <div
+      :for={town <- @towns}
+      class="w-max mb-3 border-2 border-black bg-black gap-0.5 flex flex-wrap"
+    >
+      <button
+        phx-click="toggle_town"
+        phx-value-town={town}
+        class={[
+          "py-2 px-3 bg-zinc-200 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+          if(@selected_all or town == @selected_town, do: "bg-zinc-700 !text-white")
+        ]}
+      >
+        <%= if @selected_all or town == @selected_town do %>
+          <.icon name="hero-check" />
+        <% end %>
+        <%= town %>
+      </button>
+
+      <button
+        :for={politician <- filter_by_town(@politicians, town)}
+        phx-click="toggle_politician"
+        phx-value-politician={politician.id}
+        class={[
+          "py-2 px-3 bg-zinc-100 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+          if(
+            @selected_all or politician.id == @selected_politician_id or
+              politician.town == @selected_town,
+            do: "bg-zinc-600 !text-white"
+          )
+        ]}
+      >
+        <%= if @selected_all or politician.id == @selected_politician_id or politician.town == @selected_town do %>
           <.icon name="hero-check" class="h-100" />
         <% end %>
         <%= politician.name %>

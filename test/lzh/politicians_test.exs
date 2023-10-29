@@ -87,7 +87,7 @@ defmodule Lzh.PoliticiansTest do
       assert Politicians.get_politician(politician.name, party) == politician
     end
 
-    test "create_politician/1 with valid data creates a politician" do
+    test "create_politician/1 with party_id and name creates a politician" do
       party = party_fixture()
 
       valid_attrs = %{party_id: party.id, name: "some name"}
@@ -95,6 +95,18 @@ defmodule Lzh.PoliticiansTest do
       assert {:ok, %Politician{} = politician} = Politicians.create_politician(valid_attrs)
       assert politician.party_id == party.id
       assert politician.name == "some name"
+      assert politician.town == ""
+    end
+
+    test "create_politician/1 with party_id, name, and town creates a politician" do
+      party = party_fixture()
+
+      valid_attrs = %{party_id: party.id, name: "some name", town: "Town"}
+
+      assert {:ok, %Politician{} = politician} = Politicians.create_politician(valid_attrs)
+      assert politician.party_id == party.id
+      assert politician.name == "some name"
+      assert politician.town == "Town"
     end
 
     test "create_politician/1 with invalid data returns error changeset" do
