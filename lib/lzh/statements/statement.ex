@@ -13,6 +13,7 @@ defmodule Lzh.Statements.Statement do
     field :tv_show_minute, :integer
 
     field :statement, :string
+    field :context, :string, default: ""
     field :response, :string
     field :sources, {:array, :string}
 
@@ -30,6 +31,7 @@ defmodule Lzh.Statements.Statement do
       :tv_show_url,
       :tv_show_minute,
       :statement,
+      :context,
       :response,
       :sources
     ])

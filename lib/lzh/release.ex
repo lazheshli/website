@@ -96,6 +96,7 @@ defmodule Lzh.Release do
         tv_show_url: row_data["tv_show_url"],
         tv_show_minute: tv_show_minute,
         statement: row_data["statement"],
+        context: Map.get(row_data, "context", ""),
         response: row_data["response"],
         sources: sources
       })
