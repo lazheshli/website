@@ -3,9 +3,9 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2023, month: "октомври"} = assigns) do
     ~H"""
-    <details open class="mb-6">
+    <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кои кандидати проверяваме?
+        Кои кандидати проверихме?
       </summary>
 
       <p class="pb-4 text-lg">
@@ -45,6 +45,64 @@ defmodule LzhWeb.ContentComponents do
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li>Димитър Николов (ГЕРБ-СДС)</li>
         <li>Константин Бачийски (Средна европейска класа)</li>
+      </ul>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои телевизии гледахме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Обхватът на шестото издание на <b>„Лъжеш ли?“</b>
+        са предизборните дебати и интервюта в национален ефир, които се проведоха в периода от
+        <b>29.09.2023</b>
+        до <b>27.10.2023</b>. Това включва всички предизборни дебати и интервюта по <b>БНТ</b>,
+        <b>bTV</b>
+        и <b>NOVA</b>.
+      </p>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кой имаше най-много ефирно време?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        13-те кандидати от София, Пловдив, Варна и Бургас имаха следното ефирно време в рамките на предизборната кампания:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">София</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Васил Терзиев &mdash; 139 минути</li>
+        <li>Деян Николов &mdash; 122 минути</li>
+        <li>Антон Хекимян &mdash; 102 минути</li>
+        <li>Ваня Григорова &mdash; 102 минути</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Пловдив</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Славчо Атанасов &mdash; 50 минути</li>
+        <li>Ивайло Старибратов &mdash; 44 минути</li>
+        <li>Ангел Георгиев &mdash; 41 минути</li>
+        <li>Костадин Димитров &mdash; 22 минути</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Варна</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Коста Стоянов &mdash; 45 минути</li>
+        <li>Благомир Коцев &mdash; 43 минути</li>
+        <li>Иван Портних &mdash; 18 минути</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Бургас</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Константин Бачийски &mdash; 19 минути</li>
+        <li>Димитър Николов &mdash; няма предизборни участия в национален ефир</li>
       </ul>
     </details>
     """
