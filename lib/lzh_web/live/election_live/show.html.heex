@@ -138,6 +138,20 @@
 <% end %>
 
 <%= if @election.type == :local do %>
+  <%= if @in_two_rounds do %>
+    <form phx-change="select_round" class="mb-4 lg:mb-6">
+      <label for="select-round" class="block lg:mb-2">
+        Филтрирай по тур
+      </label>
+
+      <select name="round" id="select-round">
+        <option value="0" selected={@selected_round == nil}>Двата тура</option>
+        <option value="1" selected={@selected_round == 1}>Първи тур</option>
+        <option value="2" selected={@selected_round == 2}>Втори тур</option>
+      </select>
+    </form>
+  <% end %>
+
   <form phx-change="select_town" class="lg:hidden mb-4">
     <label for="select-town" class="block">
       Филтрирай по град

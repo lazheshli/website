@@ -38,10 +38,12 @@ defmodule LzhWeb.ElectionLive.Show do
       |> assign(:parties, parties)
       |> assign(:towns, towns)
       |> assign(:statements, statements)
+      |> assign(:in_two_rounds, Enum.any?(statements, &(&1.round == 2)))
       |> assign(:selected_all, true)
       |> assign(:selected_party_id, nil)
       |> assign(:selected_town, nil)
       |> assign(:selected_politician_id, nil)
+      |> assign(:selected_round, nil)
       |> assign(:selected_statements, statements)
 
     {:ok, socket}
@@ -127,6 +129,24 @@ defmodule LzhWeb.ElectionLive.Show do
           :selected_statements,
           Enum.filter(statements, &(&1.politician.id == toggled_politician_id))
         )
+      end
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("select_round", %{"round" => round}, socket) do
+    %{statements: statements} = socket.assigns
+
+    round = String.to_integer(round)
+
+    socket =
+      if round == 0 do
+        socket
+        |> assign(:selected_round, nil)
+      else
+        socket
+        |> assign(:selected_round, round)
       end
 
     {:noreply, socket}
