@@ -20,7 +20,7 @@
     <select name="politician" id={"select-politician-#{@selected_party_id}"}>
       <option value={0} selected={@selected_politician_id == nil}>Покажи всички</option>
       <option
-        :for={politician <- filter_by_party(@politicians, @selected_party_id)}
+        :for={politician <- filter_politicians_by_party(@politicians, @selected_party_id)}
         value={politician.id}
         selected={politician.id == @selected_politician_id}
       >
@@ -62,7 +62,7 @@
       </button>
 
       <button
-        :for={politician <- filter_by_party(@politicians, party.id)}
+        :for={politician <- filter_politicians_by_party(@politicians, party.id)}
         phx-click="toggle_politician"
         phx-value-politician={politician.id}
         class={[
@@ -177,7 +177,7 @@
         <% end %>
       </option>
       <option
-        :for={politician <- filter_by_town(@politicians, @selected_town)}
+        :for={politician <- filter_politicians_by_town(@politicians, @selected_town)}
         value={politician.id}
         selected={politician.id == @selected_politician_id}
       >
@@ -219,7 +219,7 @@
       </button>
 
       <button
-        :for={politician <- filter_by_town(@politicians, town)}
+        :for={politician <- filter_politicians_by_town(@politicians, town)}
         phx-click="toggle_politician"
         phx-value-politician={politician.id}
         class={[
