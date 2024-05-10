@@ -154,6 +154,10 @@ defmodule Lzh.Elections do
     "Местни избори"
 
   """
+  def election_name(%Election{date: ~D[2024-06-09]}) do
+    "Парламентарни и европейски избори"
+  end
+
   def election_name(%Election{} = election) do
     Map.get(@types, election.type)
     |> String.capitalize()

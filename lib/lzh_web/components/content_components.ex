@@ -1,6 +1,94 @@
 defmodule LzhWeb.ContentComponents do
   use Phoenix.Component
 
+  def election_details(%{year: 2024, month: "юни"} = assigns) do
+    ~H"""
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои кандидати проверихме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        В рамките на седмото издание на <b>„Лъжеш ли?“</b>
+        проверяваме истиността на изказванията на следните кандидати за Народно събрание и Европейски парламент, които ще участват в изборите на 09.06.2024:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">ГЕРБ-СДС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Бойко Борисов</li>
+        <li>Делян Добрев</li>
+        <li>Росен Желязков</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Продължаваме промяната – Демократична България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Кирил Петков</li>
+        <li>Асен Василев</li>
+        <li>Даниел Лорер</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">ДПС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Делян Пеевски</li>
+        <li>Джевдет Чакъров</li>
+        <li>Йордан Цонев</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Възраждане</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Костадин Костадинов</li>
+        <li>Цончо Ганев</li>
+        <li>Петър Волгин</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">БСП</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Корнелия Нинова</li>
+        <li>Георги Свиленски</li>
+        <li>Кристиан Вигенин</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Има такъв народ</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Станислав Трифонов</li>
+        <li>Тошко Хаджитодоров</li>
+        <li>Ивайло Вълчев</li>
+      </ul>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои телевизии гледахме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Обхватът на седмото издание на <b>„Лъжеш ли?“</b>
+        са предизборните дебати и интервюта в национален ефир, които ще се проведат в периода от
+        <b>10.05.2024</b>
+        до <b>07.06.2024</b>. Това включва всички предизборни дебати и интервюта по <b>БНТ</b>,
+        <b>bTV</b>
+        и <b>NOVA</b>.
+      </p>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кога ще обявим резултатите от проверката?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Резултатите от проверката на изказванията на избраните кандидати за Народно събрание и Европейски парламент ще публикуваме на <b>08.06.2024</b>.
+      </p>
+    </details>
+    """
+  end
+
   def election_details(%{year: 2023, month: "октомври"} = assigns) do
     ~H"""
     <details class="mb-6">
