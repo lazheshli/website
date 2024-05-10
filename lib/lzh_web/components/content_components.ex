@@ -64,7 +64,7 @@ defmodule LzhWeb.ContentComponents do
 
     <details class="mb-6">
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
-        Кои телевизии гледахме?
+        Кои телевизии гледаме?
       </summary>
 
       <p class="pb-4 text-lg">
