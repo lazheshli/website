@@ -5,25 +5,8 @@
 
 <.election_details year={@election.date.year} month={@election.month_name} />
 
-<.h2 class="mt-10">Резултати</.h2>
-
 <%= if Date.compare(Date.utc_today(), @election.date) == :lt do %>
-  <p class="text-lg">
-    Резултатите ще публикуваме скоро!
-    За акценти от предизборната кампания следете страниците ни във
-    <a
-      href="https://www.facebook.com/lazheshli"
-      title="Последвай ни във Facebook"
-      class="underline"
-    >
-      Facebook
-    </a>
-    и <a
-      href="https://www.instagram.com/lazheshli/"
-      title="Последвай ни в Instagram"
-      class="underline"
-    >Instagram</a>.
-  </p>
 <% else %>
+  <.h2 class="mt-10">Резултати</.h2>
   <%= live_render(@conn, LzhWeb.ElectionLive.Show, session: %{"election" => @election.id}) %>
 <% end %>

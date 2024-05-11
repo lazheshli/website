@@ -3,7 +3,7 @@ defmodule LzhWeb.ContentComponents do
 
   def election_details(%{year: 2024, month: "юни"} = assigns) do
     ~H"""
-    <details class="mb-6">
+    <details class="mb-6" open>
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои кандидати проверяваме?
       </summary>
@@ -62,7 +62,7 @@ defmodule LzhWeb.ContentComponents do
       </ul>
     </details>
 
-    <details class="mb-6">
+    <details class="mb-6" open>
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кои телевизии гледаме?
       </summary>
@@ -77,13 +77,30 @@ defmodule LzhWeb.ContentComponents do
       </p>
     </details>
 
-    <details class="mb-6">
+    <details class="mb-6" open>
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кога ще обявим резултатите от проверката?
       </summary>
 
       <p class="pb-4 text-lg">
         Резултатите от проверката на изказванията на избраните кандидати за Народно събрание и Европейски парламент ще публикуваме на <b>08.06.2024</b>.
+        За акценти от предизборната кампания следете страниците ни във <a
+          href="https://www.facebook.com/lazheshli"
+          title="Последвай ни във Facebook"
+          class="underline"
+        >Facebook</a>,
+        <a
+          href="https://www.instagram.com/lazheshli/"
+          title="Последвай ни в Instagram"
+          class="underline"
+        >
+          Instagram
+        </a>
+        и <a
+          href="https://www.threads.net/@lazheshli"
+          title="Последвай ни в Threads"
+          class="underline"
+        >Threads</a>.
       </p>
     </details>
     """
