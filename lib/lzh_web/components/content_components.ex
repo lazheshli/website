@@ -88,15 +88,12 @@ defmodule LzhWeb.ContentComponents do
           href="https://www.facebook.com/lazheshli"
           title="Последвай ни във Facebook"
           class="underline"
-        >Facebook</a>,
-        <a
+        >Facebook</a>, <a
           href="https://www.instagram.com/lazheshli/"
           title="Последвай ни в Instagram"
           class="underline"
-        >
-          Instagram
-        </a>
-        и <a
+          phx-no-format
+        >Instagram</a> и <a
           href="https://www.threads.net/@lazheshli"
           title="Последвай ни в Threads"
           class="underline"
