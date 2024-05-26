@@ -1,4 +1,4 @@
-defmodule LzhWeb.UserSettingsLive do
+defmodule LzhWeb.Admin.UserSettingsLive do
   use LzhWeb, :admin_live_view
 
   alias Lzh.Admin
@@ -6,8 +6,8 @@ defmodule LzhWeb.UserSettingsLive do
   def render(assigns) do
     ~H"""
     <.header class="text-center">
-      Account Settings
-      <:subtitle>Manage your account email address and password settings</:subtitle>
+      Настройки
+      <:subtitle>Поща и парола</:subtitle>
     </.header>
 
     <div class="space-y-12 divide-y">
@@ -18,26 +18,27 @@ defmodule LzhWeb.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
+          <.input field={@email_form[:email]} type="email" label="Поща" required />
           <.input
             field={@email_form[:current_password]}
             name="current_password"
             id="current_password_for_email"
             type="password"
-            label="Current password"
+            label="Парола"
             value={@email_form_current_password}
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
+            <.button phx-disable-with="Сменяне...">Смени пощата</.button>
           </:actions>
         </.simple_form>
       </div>
+
       <div>
         <.simple_form
           for={@password_form}
           id="password_form"
-          action={~p"/users/log_in?_action=password_updated"}
+          action={~p"/админ/вход?_action=password_updated"}
           method="post"
           phx-change="validate_password"
           phx-submit="update_password"
@@ -49,23 +50,28 @@ defmodule LzhWeb.UserSettingsLive do
             id="hidden_user_email"
             value={@current_email}
           />
-          <.input field={@password_form[:password]} type="password" label="New password" required />
+          <.input
+            field={@password_form[:password]}
+            type="password"
+            label="Нова парола"
+            required
+          />
           <.input
             field={@password_form[:password_confirmation]}
             type="password"
-            label="Confirm new password"
+            label="Още веднъж новата парола"
           />
           <.input
             field={@password_form[:current_password]}
             name="current_password"
             type="password"
-            label="Current password"
+            label="Сегашната парола"
             id="current_password_for_password"
             value={@current_password}
             required
           />
           <:actions>
-            <.button phx-disable-with="Changing...">Change Password</.button>
+            <.button phx-disable-with="Сменяне...">Смени паролата</.button>
           </:actions>
         </.simple_form>
       </div>
@@ -77,13 +83,13 @@ defmodule LzhWeb.UserSettingsLive do
     socket =
       case Admin.update_user_email(socket.assigns.current_user, token) do
         :ok ->
-          put_flash(socket, :info, "Email changed successfully.")
+          put_flash(socket, :info, "Пощата е сменена.")
 
         :error ->
-          put_flash(socket, :error, "Email change link is invalid or it has expired.")
+          put_flash(socket, :error, "Връзката към страницата за смяна на пощата не важи.")
       end
 
-    {:ok, push_navigate(socket, to: ~p"/users/settings")}
+    {:ok, push_navigate(socket, to: ~p"/админ/настройки")}
   end
 
   def mount(_params, _session, socket) do
@@ -124,10 +130,10 @@ defmodule LzhWeb.UserSettingsLive do
         Admin.deliver_user_update_email_instructions(
           applied_user,
           user.email,
-          &url(~p"/users/settings/confirm_email/#{&1}")
+          &url(~p"/админ/настройки/потвърждаване/#{&1}")
         )
 
-        info = "A link to confirm your email change has been sent to the new address."
+        info = "Изпратихме ти връзка към страница за потвърждаване на новата поща."
         {:noreply, socket |> put_flash(:info, info) |> assign(email_form_current_password: nil)}
 
       {:error, changeset} ->

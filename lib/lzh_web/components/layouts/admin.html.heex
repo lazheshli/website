@@ -5,36 +5,28 @@
     </li>
     <li>
       <.link
-        href={~p"/users/settings"}
+        href={~p"/админ/настройки"}
         class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
       >
-        Settings
+        Настройки
       </.link>
     </li>
     <li>
       <.link
-        href={~p"/users/log_out"}
+        href={~p"/админ/изход"}
         method="delete"
         class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
       >
-        Log out
+        Изход
       </.link>
     </li>
   <% else %>
     <li>
       <.link
-        href={~p"/users/register"}
+        href={~p"/админ/вход"}
         class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
       >
-        Register
-      </.link>
-    </li>
-    <li>
-      <.link
-        href={~p"/users/log_in"}
-        class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-      >
-        Log in
+        Вход
       </.link>
     </li>
   <% end %>

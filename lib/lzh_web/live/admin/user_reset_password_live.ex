@@ -1,4 +1,4 @@
-defmodule LzhWeb.UserResetPasswordLive do
+defmodule LzhWeb.Admin.UserResetPasswordLive do
   use LzhWeb, :admin_live_view
 
   alias Lzh.Admin
@@ -6,7 +6,7 @@ defmodule LzhWeb.UserResetPasswordLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">Reset Password</.header>
+      <.header class="text-center">Смяна на паролата</.header>
 
       <.simple_form
         for={@form}
@@ -15,24 +15,23 @@ defmodule LzhWeb.UserResetPasswordLive do
         phx-change="validate"
       >
         <.error :if={@form.errors != []}>
-          Oops, something went wrong! Please check the errors below.
+          Опа, нещо се обърка! Виж грешките по-долу.
         </.error>
 
-        <.input field={@form[:password]} type="password" label="New password" required />
+        <.input field={@form[:password]} type="password" label="Нова парола" required />
         <.input
           field={@form[:password_confirmation]}
           type="password"
-          label="Confirm new password"
+          label="Още веднъж новата парола"
           required
         />
         <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
+          <.button phx-disable-with="Сменяне..." class="w-full">Смени паролата</.button>
         </:actions>
       </.simple_form>
 
       <p class="text-center text-sm mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/админ/вход"}>Вход</.link>
       </p>
     </div>
     """
@@ -60,8 +59,8 @@ defmodule LzhWeb.UserResetPasswordLive do
       {:ok, _} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Password reset successfully.")
-         |> redirect(to: ~p"/users/log_in")}
+         |> put_flash(:info, "Паролата ти е сменена.")
+         |> redirect(to: ~p"/админ/вход")}
 
       {:error, changeset} ->
         {:noreply, assign_form(socket, Map.put(changeset, :action, :insert))}
@@ -78,8 +77,8 @@ defmodule LzhWeb.UserResetPasswordLive do
       assign(socket, user: user, token: token)
     else
       socket
-      |> put_flash(:error, "Reset password link is invalid or it has expired.")
-      |> redirect(to: ~p"/")
+      |> put_flash(:error, "Връзката към страницата за смяна на паролата не важи.")
+      |> redirect(to: ~p"/админ/вход")
     end
   end
 

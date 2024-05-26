@@ -1,21 +1,17 @@
-defmodule LzhWeb.UserSessionController do
+defmodule LzhWeb.Admin.UserSessionController do
   use LzhWeb, :controller
 
   alias Lzh.Admin
-  alias LzhWeb.UserAuth
-
-  def create(conn, %{"_action" => "registered"} = params) do
-    create(conn, params, "Account created successfully!")
-  end
+  alias LzhWeb.Admin.UserAuth
 
   def create(conn, %{"_action" => "password_updated"} = params) do
     conn
-    |> put_session(:user_return_to, ~p"/users/settings")
-    |> create(params, "Password updated successfully!")
+    |> put_session(:user_return_to, ~p"/админ/настройки")
+    |> create(params, "Паролата е сменена.")
   end
 
   def create(conn, params) do
-    create(conn, params, "Welcome back!")
+    create(conn, params, "Хайде на работа!")
   end
 
   defp create(conn, %{"user" => user_params}, info) do
@@ -28,15 +24,15 @@ defmodule LzhWeb.UserSessionController do
     else
       # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
       conn
-      |> put_flash(:error, "Invalid email or password")
+      |> put_flash(:error, "Грешна поща и/или парола.")
       |> put_flash(:email, String.slice(email, 0, 160))
-      |> redirect(to: ~p"/users/log_in")
+      |> redirect(to: ~p"/админ/вход")
     end
   end
 
   def delete(conn, _params) do
     conn
-    |> put_flash(:info, "Logged out successfully.")
+    |> put_flash(:info, "Излезе ти.")
     |> UserAuth.log_out_user()
   end
 end

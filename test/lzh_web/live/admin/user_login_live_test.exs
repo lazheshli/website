@@ -1,4 +1,4 @@
-defmodule LzhWeb.UserLoginLiveTest do
+defmodule LzhWeb.Admin.UserLoginLiveTest do
   use LzhWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
@@ -6,19 +6,18 @@ defmodule LzhWeb.UserLoginLiveTest do
 
   describe "Log in page" do
     test "renders log in page", %{conn: conn} do
-      {:ok, _lv, html} = live(conn, ~p"/users/log_in")
+      {:ok, _lv, html} = live(conn, ~p"/админ/вход")
 
-      assert html =~ "Log in"
-      assert html =~ "Register"
-      assert html =~ "Forgot your password?"
+      assert html =~ "Вход"
+      assert html =~ "Забравена парола"
     end
 
     test "redirects if already logged in", %{conn: conn} do
       result =
         conn
         |> log_in_user(user_fixture())
-        |> live(~p"/users/log_in")
-        |> follow_redirect(conn, "/users/settings")
+        |> live(~p"/админ/вход")
+        |> follow_redirect(conn, ~p"/админ")
 
       assert {:ok, _conn} = result
     end
@@ -29,20 +28,20 @@ defmodule LzhWeb.UserLoginLiveTest do
       password = "123456789abcd"
       user = user_fixture(%{password: password})
 
-      {:ok, lv, _html} = live(conn, ~p"/users/log_in")
+      {:ok, lv, _html} = live(conn, ~p"/админ/вход")
 
       form =
         form(lv, "#login_form", user: %{email: user.email, password: password, remember_me: true})
 
       conn = submit_form(form, conn)
 
-      assert redirected_to(conn) == ~p"/users/settings"
+      assert redirected_to(conn) == ~p"/админ"
     end
 
     test "redirects to login page with a flash error if there are no valid credentials", %{
       conn: conn
     } do
-      {:ok, lv, _html} = live(conn, ~p"/users/log_in")
+      {:ok, lv, _html} = live(conn, ~p"/админ/вход")
 
       form =
         form(lv, "#login_form",
@@ -51,37 +50,25 @@ defmodule LzhWeb.UserLoginLiveTest do
 
       conn = submit_form(form, conn)
 
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Грешна поща и/или парола."
 
-      assert redirected_to(conn) == "/users/log_in"
+      assert redirected_to(conn) == ~p"/админ/вход"
     end
   end
 
   describe "login navigation" do
-    test "redirects to registration page when the Register button is clicked", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/users/log_in")
-
-      {:ok, _login_live, login_html} =
-        lv
-        |> element(~s|main a:fl-contains("Sign up")|)
-        |> render_click()
-        |> follow_redirect(conn, ~p"/users/register")
-
-      assert login_html =~ "Register"
-    end
-
     test "redirects to forgot password page when the Forgot Password button is clicked", %{
       conn: conn
     } do
-      {:ok, lv, _html} = live(conn, ~p"/users/log_in")
+      {:ok, lv, _html} = live(conn, ~p"/админ/вход")
 
       {:ok, conn} =
         lv
-        |> element(~s|main a:fl-contains("Forgot your password?")|)
+        |> element(~s|main a:fl-contains("Забравена парола")|)
         |> render_click()
-        |> follow_redirect(conn, ~p"/users/reset_password")
+        |> follow_redirect(conn, ~p"/админ/забравена-парола")
 
-      assert conn.resp_body =~ "Forgot your password?"
+      assert conn.resp_body =~ "Забравил си си паролата?"
     end
   end
 end
