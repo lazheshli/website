@@ -3,7 +3,7 @@ defmodule LzhWeb.Admin.HomeLive do
 
   def render(%{} = assigns) do
     ~H"""
-    <.h1>Welcome!</.h1>
+    <.h1>Хайде!</.h1>
     """
   end
 end

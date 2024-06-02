@@ -12,7 +12,7 @@ defmodule LzhWeb.Admin.UserForgotPasswordLiveTest do
       {:ok, lv, html} = live(conn, ~p"/админ/забравена-парола")
 
       assert html =~ "Забравил си си паролата?"
-      assert has_element?(lv, ~s|a[href="#{~p"/админ/вход"}"]|, "Вход")
+      assert has_element?(lv, ~s|a[href="#{~p"/админ/вход"}"]|, "Обратно")
     end
 
     test "redirects if already logged in", %{conn: conn} do

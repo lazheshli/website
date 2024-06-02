@@ -1,38 +1,60 @@
-<ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-  <%= if @current_user do %>
-    <li class="text-[0.8125rem] leading-6 text-zinc-900">
-      <%= @current_user.email %>
-    </li>
-    <li>
-      <.link
-        href={~p"/админ/настройки"}
-        class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-      >
-        Настройки
-      </.link>
-    </li>
-    <li>
-      <.link
-        href={~p"/админ/изход"}
-        method="delete"
-        class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-      >
-        Изход
-      </.link>
-    </li>
-  <% else %>
-    <li>
-      <.link
-        href={~p"/админ/вход"}
-        class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-      >
-        Вход
-      </.link>
-    </li>
-  <% end %>
-</ul>
+<div class="w-full flex flex-row">
+  <aside class="w-80 flex flex-col gap-8">
+    <%= if @current_user do %>
+      <a href={~p"/админ"} title="Лъжеш ли?" class="flex flex-col">
+        <img src="/images/logo.jpg" class="w-80 h-80 object-cover" />
+        <h1 class="w-2/3 mx-auto pb-2 clear-both text-center text-4xl leading-snug uppercase border-b-4 border-black">
+          Админ
+        </h1>
+      </a>
 
-<main>
-  <.flash_group flash={@flash} />
-  <%= @inner_content %>
-</main>
+      <div class="px-2 text-center text-zinc-900">
+        Здравей, лъжеловец <strong class="font-semibold"><%= @current_user.email %></strong>
+      </div>
+
+      <nav class="flex flex-col gap-1 px-2">
+        <.link
+          href={~p"/админ/твърдения"}
+          class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        >
+          <.icon name="hero-magnifying-glass" class="inline-block self-center mr-2 text-zinc-500" />
+          <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
+            Твърдения
+          </span>
+        </.link>
+
+        <.link
+          href={~p"/админ/настройки"}
+          class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        >
+          <.icon name="hero-wrench" class="inline-block self-center mr-2 text-zinc-500" />
+          <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
+            Настройки
+          </span>
+        </.link>
+
+        <.link
+          href={~p"/админ/изход"}
+          method="delete"
+          class="block rounded p-2 hover:bg-zinc-200 flex flex-row"
+        >
+          <.icon
+            name="hero-arrow-left-circle"
+            class="inline-block self-center mr-2 text-zinc-500"
+          />
+          <span class="inline-block leading-8 align-middle text-zinc-900 font-medium font-semibold">
+            Изход
+          </span>
+        </.link>
+      </nav>
+    <% else %>
+      <img src="/images/logo.jpg" class="w-80 h-80 object-cover" />
+    <% end %>
+  </aside>
+
+  <main class="grow p-4">
+    <%= @inner_content %>
+  </main>
+</div>
+
+<.flash_group flash={@flash} />

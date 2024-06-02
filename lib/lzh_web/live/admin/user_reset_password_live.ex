@@ -6,6 +6,8 @@ defmodule LzhWeb.Admin.UserResetPasswordLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
+      <.h1>Вход</.h1>
+
       <.header class="text-center">Смяна на паролата</.header>
 
       <.simple_form

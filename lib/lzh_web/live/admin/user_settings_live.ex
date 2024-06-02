@@ -5,10 +5,7 @@ defmodule LzhWeb.Admin.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <.header class="text-center">
-      Настройки
-      <:subtitle>Поща и парола</:subtitle>
-    </.header>
+    <.h1>Настройки</.h1>
 
     <div class="space-y-12 divide-y">
       <div>
@@ -18,6 +15,8 @@ defmodule LzhWeb.Admin.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
+          <.h2>Поща</.h2>
+
           <.input field={@email_form[:email]} type="email" label="Поща" required />
           <.input
             field={@email_form[:current_password]}
@@ -44,6 +43,8 @@ defmodule LzhWeb.Admin.UserSettingsLive do
           phx-submit="update_password"
           phx-trigger-action={@trigger_submit}
         >
+          <.h2>Парола</.h2>
+
           <input
             name={@password_form[:email].name}
             type="hidden"

@@ -6,9 +6,11 @@ defmodule LzhWeb.Admin.UserForgotPasswordLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
+      <.h1>Вход</.h1>
+
       <.header class="text-center">
         Забравил си си паролата?
-        <:subtitle>Ще изпратим инструкции за смяна на паролата на пощата ти</:subtitle>
+        <:subtitle>Ще изпратим на пощата ти инструкции за смяна на паролата</:subtitle>
       </.header>
 
       <.simple_form for={@form} id="reset_password_form" phx-submit="send_email">
@@ -20,7 +22,7 @@ defmodule LzhWeb.Admin.UserForgotPasswordLive do
         </:actions>
       </.simple_form>
       <p class="text-center text-sm mt-4">
-        <.link href={~p"/админ/вход"}>Вход</.link>
+        <.link href={~p"/админ/вход"}>Обратно</.link>
       </p>
     </div>
     """

@@ -4,9 +4,7 @@ defmodule LzhWeb.Admin.UserLoginLive do
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">
-        Вход
-      </.header>
+      <.h1>Вход</.h1>
 
       <.simple_form for={@form} id="login_form" action={~p"/админ/вход"} phx-update="ignore">
         <.input field={@form[:email]} type="email" label="Поща" required />
