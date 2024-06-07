@@ -100,7 +100,7 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
           notify_parent({:saved, statement})
 
           socket
-          |> put_flash(:info, "Ново твърдение, ура!")
+          |> put_flash(:info, "Новото твърдение е добавено.")
           |> push_patch(to: ~p"/админ/твърдения")
 
         {:error, changeset} ->
@@ -121,7 +121,7 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
           notify_parent({:saved, statement})
 
           socket
-          |> put_flash(:info, "Запазено!")
+          |> put_flash(:info, "Твърдението е запазено.")
           |> push_patch(to: ~p"/админ/твърдения")
 
         {:error, changeset} ->
