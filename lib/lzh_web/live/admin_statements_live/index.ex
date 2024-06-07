@@ -12,6 +12,7 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
     socket =
       socket
       |> assign(:election, election)
+      |> assign(:order_by, :date)
       |> assign_statements()
 
     {:ok, socket}
@@ -25,6 +26,26 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
   @impl true
   def handle_info({:saved, _statement}, socket) do
     {:noreply, assign_statements(socket)}
+  end
+
+  #
+  # event handlers
+  #
+
+  @impl true
+  def handle_event("set_order_by", %{"key" => key}, socket) do
+    order_by =
+      case key do
+        "date" -> :date
+        "politician" -> :politician
+      end
+
+    socket =
+      socket
+      |> assign(:order_by, order_by)
+      |> assign_statements()
+
+    {:noreply, socket}
   end
 
   #
@@ -50,7 +71,19 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
   end
 
   defp assign_statements(socket) do
-    socket
-    |> assign(:statements, Statements.list_statements(socket.assigns.election))
+    statements =
+      socket.assigns.election
+      |> Statements.list_statements()
+      |> sort_statements(socket.assigns.order_by)
+
+    assign(socket, :statements, statements)
+  end
+
+  defp sort_statements(statements, :date) do
+    Enum.sort_by(statements, &{&1.date, &1.politician.name})
+  end
+
+  defp sort_statements(statements, :politician) do
+    Enum.sort_by(statements, &{&1.politician.name, &1.date})
   end
 end
