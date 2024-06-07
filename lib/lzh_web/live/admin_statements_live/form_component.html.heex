@@ -1,0 +1,65 @@
+<section>
+  <.form
+    id="statement_admin_form"
+    for={@form}
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+    class="flex flex-col gap-5"
+  >
+    <.input
+      field={@form[:politician_id]}
+      type="select"
+      label="Политик"
+      options={@politicians_for_select}
+    />
+
+    <.input field={@form[:tv_show]} type="text" label="Предаване" />
+
+    <.input
+      field={@form[:tv_show_url]}
+      type="url"
+      label="Връзка към предаването"
+    />
+
+    <.input
+      field={@form[:date]}
+      type="date"
+      label="Дата на излъчване"
+      value={Date.utc_today()}
+    />
+
+    <.input
+      field={@form[:tv_show_minute]}
+      type="text"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      label="Минута на изказване"
+    />
+
+    <.input field={@form[:statement]} type="textarea" label="Твърдение" />
+
+    <.input
+      field={@form[:context]}
+      type="textarea"
+      label="Контекст на изказването"
+    />
+
+    <.input
+      field={@form[:response]}
+      type="textarea"
+      label="Нашата аргументация"
+    />
+
+    <.input
+      field={@form[:sources]}
+      type="textarea"
+      label="Източници (по един на ред)"
+      value={array_to_string(@form[:sources].value)}
+    />
+
+    <div class="flex flex-row-reverse">
+      <.button phx-disable-with="Запазване">Запази</.button>
+    </div>
+  </.form>
+</section>

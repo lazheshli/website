@@ -2,6 +2,7 @@ defmodule LzhWeb.Admin.Router do
   use LzhWeb, :router
 
   import LzhWeb.Admin.UserAuth
+
   alias LzhWeb.Admin.UserAuth
 
   scope "/", LzhWeb.Admin do
@@ -23,6 +24,10 @@ defmodule LzhWeb.Admin.Router do
     live_session :require_authenticated_user,
       on_mount: [{UserAuth, :ensure_authenticated}] do
       live "/админ", HomeLive
+
+      live "/админ/твърдения", StatementsLive.Index, :index
+      live "/админ/твърдения/ново", StatementsLive.Index, :new
+      live "/админ/твърдения/:id/редакция", StatementsLive.Index, :edit
 
       live "/админ/настройки", UserSettingsLive, :edit
       live "/админ/настройки/потвърждаване/:token", UserSettingsLive, :confirm_email

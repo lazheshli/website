@@ -1,0 +1,37 @@
+<.h1>Твърдения</.h1>
+
+<div class="w-full flex flex-row-reverse mb-4">
+  <.link patch={~p"/админ/твърдения/ново"}>
+    <.button>Ново твърдение</.button>
+  </.link>
+</div>
+
+<div :for={statement <- @statements} class="w-full flex flex-row gap-4">
+  <.statement statement={statement} />
+  <div class="mt-4">
+    <.link patch={~p"/админ/твърдения/#{statement.id}/редакция"}>
+      <.button>Редактирай</.button>
+    </.link>
+  </div>
+</div>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="form_modal"
+  show={true}
+  on_cancel={JS.patch(~p"/админ/твърдения")}
+>
+  <%= if @live_action == :new do %>
+    <.h2>Добавяне на ново твърдение</.h2>
+  <% else %>
+    <.h2>Редакция на твърдение</.h2>
+  <% end %>
+
+  <.live_component
+    module={LzhWeb.Admin.StatementsLive.FormComponent}
+    id={"statement_form_#{@statement_for_form.id}"}
+    statement={@statement_for_form}
+    election={@election}
+    action={@live_action}
+  />
+</.modal>

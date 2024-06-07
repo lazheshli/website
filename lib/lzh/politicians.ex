@@ -1,4 +1,6 @@
 defmodule Lzh.Politicians do
+  import Ecto.Query
+
   alias Lzh.Repo
 
   alias Lzh.Politicians.{Party, Politician}
@@ -131,7 +133,9 @@ defmodule Lzh.Politicians do
 
   """
   def list_politicians do
-    Repo.all(Politician)
+    Politician
+    |> order_by([politician], asc: politician.name, asc: politician.id)
+    |> Repo.all()
   end
 
   @doc """
