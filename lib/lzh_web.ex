@@ -93,12 +93,13 @@ defmodule LzhWeb do
       # HTML escaping functionality
       import Phoenix.HTML
 
-      # Core UI components and translation
+      # UI components
       import LzhWeb.CoreComponents
-      import LzhWeb.Gettext
-
-      # More components
+      import LzhWeb.Components
       import LzhWeb.ContentComponents
+
+      # Translation
+      import LzhWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

@@ -1,4 +1,10 @@
 defmodule LzhWeb.ContentComponents do
+  @moduledoc """
+  Non-generic UI components with hard-coded content.
+
+  At some point in the future the content should come from the database and the
+  components migrated to the LzhWeb.Components module.
+  """
   use Phoenix.Component
 
   def election_details(%{year: 2024, month: "юни"} = assigns) do
