@@ -80,10 +80,10 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
   end
 
   defp sort_statements(statements, :date) do
-    Enum.sort_by(statements, &{&1.date, &1.politician.name})
+    Enum.sort_by(statements, & &1.date, Date)
   end
 
   defp sort_statements(statements, :politician) do
-    Enum.sort_by(statements, &{&1.politician.name, &1.date})
+    Enum.sort_by(statements, & &1.politician.name)
   end
 end
