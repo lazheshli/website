@@ -25,6 +25,8 @@ defmodule LzhWeb.Admin.Router do
       on_mount: [{UserAuth, :ensure_authenticated}] do
       live "/админ", HomeLive
 
+      live "/админ/избори", ElectionsLive.Index, :index
+
       live "/админ/твърдения", StatementsLive.Index, :index
       live "/админ/твърдения/ново", StatementsLive.Index, :new
       live "/админ/твърдения/:id/редакция", StatementsLive.Index, :edit

@@ -1,0 +1,25 @@
+<.h1>Избори</.h1>
+
+<.table id="elections" rows={@elections}>
+  <:col :let={election} label="Избори">
+    <%= election.name %> &mdash; <%= election.month_name %> <%= election.date.year %>
+  </:col>
+
+  <:col :let={election} label="Дата"><%= election.date %></:col>
+
+  <:col :let={election} label="Твърдения">
+    <div class="flex flex-row gap-4 items-center">
+      <%= if election.show_statements do %>
+        <span>Твърденията са публикувани</span>
+        <.button phx-click="hide_statements" phx-value-election={election.id}>
+          Скрий
+        </.button>
+      <% else %>
+        <span>Твърденията са скрити</span>
+        <.button phx-click="show_statements" phx-value-election={election.id}>
+          Публикувай
+        </.button>
+      <% end %>
+    </div>
+  </:col>
+</.table>
