@@ -61,7 +61,7 @@ defmodule LzhWeb.Components do
         <.icon name="hero-chat-bubble-left-ellipsis" class="block w-6 h-6 mt-1 mr-2" />
         <dl class="basis-full">
           <dt class="text-zinc-500">Невярно твърдение</dt>
-          <dd><%= @statement.statement %></dd>
+          <dd><%= text_to_html(@statement.statement) %></dd>
         </dl>
       </div>
 
@@ -70,7 +70,7 @@ defmodule LzhWeb.Components do
           <.icon name="hero-map" class="block w-6 h-6 mt-1 mr-2" />
           <dl class="basis-full">
             <dt class="text-zinc-500">Контекст на изказването</dt>
-            <dd><%= @statement.context %></dd>
+            <dd><%= text_to_html(@statement.context) %></dd>
           </dl>
         </div>
       <% end %>
@@ -79,7 +79,7 @@ defmodule LzhWeb.Components do
         <.icon name="hero-check-circle" class="block w-6 h-6 mt-1 mr-2" />
         <dl class="basis-full">
           <dt class="text-zinc-500">Нашата аргументация</dt>
-          <dd><%= @statement.response %></dd>
+          <dd><%= text_to_html(@statement.response) %></dd>
         </dl>
       </div>
 
@@ -105,5 +105,12 @@ defmodule LzhWeb.Components do
       </div>
     </div>
     """
+  end
+
+  defp text_to_html(text) do
+    text
+    |> String.trim()
+    |> String.split("\n", trim: false)
+    |> Enum.intersperse({:safe, "<br />"})
   end
 end
