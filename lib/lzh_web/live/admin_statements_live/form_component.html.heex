@@ -38,7 +38,7 @@
       label="Минута на изказване"
     />
 
-    <.input field={@form[:statement]} type="textarea" label="Твърдение" />
+    <.input field={@form[:statement]} type="textarea" rows={6} label="Твърдение" />
 
     <.input
       field={@form[:context]}
@@ -49,12 +49,14 @@
     <.input
       field={@form[:response]}
       type="textarea"
+      rows={6}
       label="Нашата аргументация"
     />
 
     <.input
       field={@form[:sources]}
       type="textarea"
+      rows={6}
       label="Източници (по един на ред)"
       value={array_to_string(@form[:sources].value)}
     />

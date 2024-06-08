@@ -30,6 +30,7 @@ defmodule LzhWeb.Components do
             <dd>
               <%= @statement.tv_show %> (<a
                 href={@statement.tv_show_url}
+                target="_blank"
                 class="underline"
                 title="Връзка към предаването"
               >връзка</a>)
