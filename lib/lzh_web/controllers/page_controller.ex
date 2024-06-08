@@ -21,12 +21,6 @@ defmodule LzhWeb.PageController do
   def election(conn, %{"slug" => slug}) do
     election = Elections.get_election_by_slug(slug)
 
-    election =
-      election
-      |> Map.put(:slug, Elections.election_slug(election))
-      |> Map.put(:name, Elections.election_name(election))
-      |> Map.put(:month_name, Elections.election_month_name(election))
-
     conn
     |> assign(:election, election)
     |> assign(:page_title, "#{election.name} (#{election.month_name} #{election.date.year})")
