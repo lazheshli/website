@@ -16,7 +16,7 @@ defmodule LzhWeb.ContentComponents do
 
       <p class="pb-4 text-lg">
         В рамките на седмото издание на <b>„Лъжеш ли?“</b>
-        проверихме истиността на изказванията на следните кандидати за Народно събрание и Европейски парламент, които участваха в изборите на 09.06.2024:
+        проверихме истиността на изказванията на следните кандидати за Народно събрание и Европейски парламент на изборите на 09.06.2024:
       </p>
 
       <h3 class="pb-2 text-lg font-bold">ГЕРБ-СДС</h3>
@@ -93,6 +93,10 @@ defmodule LzhWeb.ContentComponents do
       <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
         Кой имаше най-много ефирно време?
       </summary>
+
+      <p class="pb-4 text-lg">
+        Шестте партии и коалиции на 24-мата кандидати в нашата извадка имаха следното ефирно време в рамките на предизборната кампания:
+      </p>
 
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li><b>Възраждане</b> &mdash; 302 минути</li>
