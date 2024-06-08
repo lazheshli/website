@@ -3,7 +3,11 @@
   <br /> (<%= @election.month_name %> <%= @election.date.year %>)
 </.h1>
 
-<.election_details year={@election.date.year} month={@election.month_name} />
+<.election_details
+  year={@election.date.year}
+  month={@election.month_name}
+  show_statements={@election.show_statements}
+/>
 
 <%= if @election.show_statements do %>
   <.h2 class="mt-10">Резултати</.h2>

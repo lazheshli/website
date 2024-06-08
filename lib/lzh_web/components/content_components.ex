@@ -7,6 +7,105 @@ defmodule LzhWeb.ContentComponents do
   """
   use Phoenix.Component
 
+  def election_details(%{year: 2024, month: "юни", show_statements: true} = assigns) do
+    ~H"""
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои кандидати проверихме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        В рамките на седмото издание на <b>„Лъжеш ли?“</b>
+        проверихме истиността на изказванията на следните кандидати за Народно събрание и Европейски парламент, които участваха в изборите на 09.06.2024:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">ГЕРБ-СДС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Бойко Борисов</li>
+        <li>Делян Добрев</li>
+        <li>Росен Желязков</li>
+        <li>Деница Сачева</li>
+        <li>Даниел Митов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Продължаваме промяната – Демократична България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Кирил Петков</li>
+        <li>Асен Василев</li>
+        <li>Даниел Лорер</li>
+        <li>Стефан Тафров</li>
+        <li>Христо Иванов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">ДПС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Делян Пеевски</li>
+        <li>Джевдет Чакъров</li>
+        <li>Йордан Цонев</li>
+        <li>Илхан Кючюк</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Възраждане</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Костадин Костадинов</li>
+        <li>Цончо Ганев</li>
+        <li>Петър Волгин</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">БСП за България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Корнелия Нинова</li>
+        <li>Георги Свиленски</li>
+        <li>Кристиан Вигенин</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Има такъв народ</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Станислав Трифонов</li>
+        <li>Тошко Хаджитодоров</li>
+        <li>Ивайло Вълчев</li>
+        <li>Станислав Балабанов</li>
+      </ul>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои телевизии гледахме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Обхватът на седмото издание на <b>„Лъжеш ли?“</b>
+        са предизборните дебати и интервюта в национален ефир, които се проведоха в периода от
+        <b>10.05.2024</b>
+        до <b>07.06.2024</b>. Това включва всички предизборни дебати и интервюта по <b>БНТ</b>,
+        <b>bTV</b>
+        и <b>NOVA</b>.
+      </p>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кой имаше най-много ефирно време?
+      </summary>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li><b>Възраждане</b> &mdash; 302 минути</li>
+        <li><b>БСП за България</b> &mdash; 182 минути</li>
+        <li><b>Има такъв народ</b> &mdash; 163 минути</li>
+        <li><b>ГЕРБ-СДС</b> &mdash; 153 минути</li>
+        <li><b>Продължаваме промяната – Демократична България</b> &mdash; 145 минути</li>
+        <li><b>ДПС</b> &mdash; 9 минути</li>
+      </ul>
+    </details>
+    """
+  end
+
   def election_details(%{year: 2024, month: "юни"} = assigns) do
     ~H"""
     <details class="mb-6" open>
