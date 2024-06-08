@@ -78,10 +78,10 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
         "Ивайло Вълчев"
       ])
 
-    Politicians.list_politicians()
+    Politicians.list_politicians(preload_parties: true)
     |> Enum.filter(&MapSet.member?(wanted, &1.name))
-    |> Enum.dedup_by(& &1.name)
-    |> Enum.into(Keyword.new(), fn politician -> {politician.name, politician.id} end)
+    |> Enum.reject(&(&1.party.name == "Продължаваме промяната"))
+    |> Enum.into(Keyword.new(), &{"#{&1.name} (#{&1.party.name})", &1.id})
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do

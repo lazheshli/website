@@ -126,16 +126,30 @@ defmodule Lzh.Politicians do
   @doc """
   Returns the list of politicians.
 
+  If the :preload_parties flag is set, preloads the political parties.
+
   ## Examples
 
       iex> list_politicians()
       [%Politician{}, ...]
 
   """
-  def list_politicians do
+  def list_politicians(opts \\ []) do
     Politician
+    |> maybe_preload_party(opts)
     |> order_by([politician], asc: politician.name, asc: politician.id)
     |> Repo.all()
+  end
+
+  defp maybe_preload_party(query, opts) do
+    case Keyword.fetch(opts, :preload_parties) do
+      {:ok, true} ->
+        query
+        |> preload([politician], :party)
+
+      _ ->
+        query
+    end
   end
 
   @doc """

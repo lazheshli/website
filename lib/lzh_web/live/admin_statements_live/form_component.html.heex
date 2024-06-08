@@ -22,7 +22,13 @@
       label="Връзка към предаването"
     />
 
-    <.input field={@form[:date]} type="date" label="Дата на излъчване" />
+    <.input
+      field={@form[:date]}
+      type="date"
+      label="Дата на излъчване"
+      value={@form[:date].value || Date.utc_today()}
+      max={Date.utc_today()}
+    />
 
     <.input
       field={@form[:tv_show_minute]}

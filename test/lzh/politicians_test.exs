@@ -69,9 +69,18 @@ defmodule Lzh.PoliticiansTest do
 
     @invalid_attrs %{party_id: 0, name: nil}
 
-    test "list_politicians/0 returns all politicians" do
+    test "list_politicians returns all politicians" do
       politician = politician_fixture()
       assert Politicians.list_politicians() == [politician]
+    end
+
+    test "list_politicians can preload the parties" do
+      party = party_fixture()
+      politician = politician_fixture(%{party_id: party.id})
+
+      [output] = Politicians.list_politicians(preload_parties: true)
+      assert output.id == politician.id
+      assert output.party == party
     end
 
     test "get_politician!/1 returns the politician with given id" do
