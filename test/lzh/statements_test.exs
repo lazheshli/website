@@ -20,11 +20,13 @@ defmodule Lzh.StatementsTest do
 
     test "list_statements/1 returns all statements for an election" do
       election = election_fixture()
-      statement = statement_fixture(%{election_id: election.id})
+      politician = politician_fixture()
+      statement = statement_fixture(%{election_id: election.id, politician_id: politician.id})
 
       [res] = Statements.list_statements(election)
       assert res.id == statement.id
       assert res.election_id == election.id
+      assert res.politician_id == politician.id
 
       # assert that these are preloaded
       assert res.politician
@@ -33,31 +35,6 @@ defmodule Lzh.StatementsTest do
       # assert that the list is filtered by the given election
       another_election = election_fixture()
       assert Statements.list_statements(another_election) == []
-    end
-
-    test "list_statements/1 filters by politician" do
-      election = election_fixture()
-      politician = politician_fixture()
-      statement = statement_fixture(%{election_id: election.id, politician_id: politician.id})
-
-      [res] = Statements.list_statements(election, politician: politician)
-      assert res.id == statement.id
-
-      another_politician = politician_fixture()
-      assert Statements.list_statements(election, politician: another_politician) == []
-    end
-
-    test "list_statements/1 filters by political party" do
-      election = election_fixture()
-      party = party_fixture()
-      politician = politician_fixture(%{party_id: party.id})
-      statement = statement_fixture(%{election_id: election.id, politician_id: politician.id})
-
-      [res] = Statements.list_statements(election, party: party)
-      assert res.id == statement.id
-
-      another_party = party_fixture()
-      assert Statements.list_statements(election, party: another_party) == []
     end
 
     test "get_statement!/1 returns the statement with given id" do

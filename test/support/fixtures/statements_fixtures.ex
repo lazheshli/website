@@ -3,7 +3,7 @@ defmodule Lzh.StatementsFixtures do
   This module defines test helpers for creating
   entities via the `Lzh.Statements` context.
   """
-  import Lzh.{ElectionsFixtures, PoliticiansFixtures}
+  import Lzh.PoliticiansFixtures
 
   @doc """
   Generate a statement.
@@ -11,13 +11,16 @@ defmodule Lzh.StatementsFixtures do
   def statement_fixture(attrs \\ %{}) do
     {:ok, statement} =
       attrs
-      |> Map.put_new_lazy(:election_id, fn ->
-        election = election_fixture()
-        election.id
-      end)
-      |> Map.put_new_lazy(:politician_id, fn ->
-        politician = politician_fixture()
-        politician.id
+      |> Map.put_new_lazy(:avatar_id, fn ->
+        # forward politician_id and election_id, if present, to the avatar
+        avatar =
+          attrs
+          |> Map.filter(fn {key, _value} ->
+            Enum.member?([:politician_id, :election_id], key)
+          end)
+          |> avatar_fixture()
+
+        avatar.id
       end)
       |> Map.put_new(:date, ~D[2023-08-18])
       |> Map.put_new(:tv_show, "TV Show #{System.unique_integer([:positive])}")

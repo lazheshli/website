@@ -6,6 +6,7 @@ defmodule Lzh.Statements.Statement do
   schema "statements" do
     belongs_to :election, Lzh.Elections.Election
     belongs_to :politician, Lzh.Politicians.Politician
+    belongs_to :avatar, Lzh.Politicians.Avatar
 
     field :round, :integer, default: 1
 
@@ -29,6 +30,7 @@ defmodule Lzh.Statements.Statement do
     |> cast(attrs, [
       :election_id,
       :politician_id,
+      :avatar_id,
       :round,
       :date,
       :tv_show,
@@ -40,8 +42,6 @@ defmodule Lzh.Statements.Statement do
       :sources
     ])
     |> validate_required([
-      :election_id,
-      :politician_id,
       :date,
       :tv_show,
       :tv_show_url,
@@ -52,6 +52,7 @@ defmodule Lzh.Statements.Statement do
     ])
     |> assoc_constraint(:election)
     |> assoc_constraint(:politician)
+    |> assoc_constraint(:avatar)
     |> validate_subset(:round, [1, 2])
     |> validate_length(:tv_show, min: 1, max: 200)
     |> validate_number(:tv_show_minute, greater_than_or_equal_to: 0)

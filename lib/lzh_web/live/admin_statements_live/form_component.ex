@@ -25,6 +25,7 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
       |> assign(:election, election)
       |> assign(:statement, statement)
       |> assign(:action, action)
+      |> assign(:avatars_for_select, list_avatars_for_select(election))
       |> assign_form(changeset)
 
     {:ok, socket}
@@ -88,6 +89,14 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
     |> Enum.filter(&MapSet.member?(wanted, &1.name))
     |> Enum.reject(&(&1.party.name == "Продължаваме промяната"))
     |> Enum.into(Keyword.new(), &{"#{&1.name} (#{&1.party.name})", &1.id})
+  end
+
+  defp list_avatars_for_select(election) do
+    election
+    |> Politicians.list_avatars()
+    |> Enum.into(Keyword.new(), fn avatar ->
+      {"#{avatar.politician.name} (#{avatar.party})", avatar.id}
+    end)
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do

@@ -14,6 +14,13 @@
       options={@politicians_for_select}
     />
 
+    <.input
+      field={@form[:avatar_id]}
+      type="select"
+      label="Аватар"
+      options={@avatars_for_select}
+    />
+
     <.input field={@form[:tv_show]} type="text" label="Предаване" />
 
     <.input
