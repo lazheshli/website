@@ -1,0 +1,44 @@
+<.h2>
+  <%= @election.name %>, <%= @election.month_name %> <%= @election.date.year %> &mdash; Играчи
+</.h2>
+
+<div class="w-full flex flex-row items-center justify-between">
+  <.link patch={~p"/админ/избори"} class="underline hover:no-underline">
+    ← Обратно
+  </.link>
+  <.link patch={~p"/админ/избори/#{@election.id}/играчи/нов"}>
+    <.button>Нов играч</.button>
+  </.link>
+</div>
+
+<.table id="avatars" rows={@avatars}>
+  <:col :let={avatar} label="Играч"><%= avatar.politician.name %></:col>
+  <:col :let={avatar} label="Партия"><%= or_minus(avatar.party) %></:col>
+  <:col :let={avatar} label="Град"><%= or_minus(avatar.town) %></:col>
+  <:col :let={avatar} label="Действия">
+    <.link patch={~p"/админ/избори/#{@election.id}/играчи/#{avatar.id}"}>
+      <.button>Редактирай</.button>
+    </.link>
+  </:col>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="form_modal"
+  show={true}
+  on_cancel={JS.patch(~p"/админ/избори/#{@election.id}/играчи")}
+>
+  <%= if @live_action == :new do %>
+    <.h2>Добавяне на нов играч</.h2>
+  <% else %>
+    <.h2>Редакция на играч</.h2>
+  <% end %>
+
+  <.live_component
+    module={LzhWeb.Admin.ElectionsLive.AvatarForm}
+    id={"avatar_form_#{@avatar_for_form.id}"}
+    avatar={@avatar_for_form}
+    election={@election}
+    action={@live_action}
+  />
+</.modal>

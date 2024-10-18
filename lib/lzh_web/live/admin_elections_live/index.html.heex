@@ -5,9 +5,13 @@
     <%= election.name %> &mdash; <%= election.month_name %> <%= election.date.year %>
   </:col>
 
-  <:col :let={election} label="Дата"><%= election.date %></:col>
+  <:col :let={election} label="Редакция">
+    <.link patch={~p"/админ/избори/#{election.id}/играчи"}>
+      <.button>Играчи</.button>
+    </.link>
+  </:col>
 
-  <:col :let={election} label="Твърдения">
+  <:col :let={election} label="Статус">
     <div class="flex flex-row gap-4 items-center">
       <%= if election.show_statements do %>
         <span>Твърденията са публикувани</span>

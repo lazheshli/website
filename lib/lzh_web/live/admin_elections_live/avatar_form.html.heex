@@ -1,0 +1,25 @@
+<section>
+  <.form
+    id="avatar_admin_form"
+    for={@form}
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+    class="flex flex-col gap-5"
+  >
+    <.input
+      field={@form[:politician_id]}
+      type="select"
+      label="Политик"
+      options={@politicians_for_select}
+    />
+
+    <.input field={@form[:party]} type="text" label="Партия" />
+
+    <.input field={@form[:town]} type="text" label="Град" />
+
+    <div class="flex flex-row-reverse">
+      <.button phx-disable-with="Запазване">Запази</.button>
+    </div>
+  </.form>
+</section>
