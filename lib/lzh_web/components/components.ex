@@ -17,8 +17,8 @@ defmodule LzhWeb.Components do
           <dl class="basis-full">
             <dt class="text-zinc-500">Кандидат</dt>
             <dd>
-              <span class=""><%= @statement.politician.name %></span>
-              (<%= @statement.politician.party.name %>)
+              <span class=""><%= @statement.avatar.politician.name %></span>
+              (<%= @statement.avatar.party %>)
             </dd>
           </dl>
         </div>

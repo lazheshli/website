@@ -84,6 +84,6 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
   end
 
   defp sort_statements(statements, :politician) do
-    Enum.sort_by(statements, & &1.politician.name)
+    Enum.sort_by(statements, & &1.avatar.politician.name)
   end
 end

@@ -20,17 +20,16 @@ defmodule Lzh.StatementsTest do
 
     test "list_statements/1 returns all statements for an election" do
       election = election_fixture()
-      politician = politician_fixture()
-      statement = statement_fixture(%{election_id: election.id, politician_id: politician.id})
+      avatar = avatar_fixture(%{election_id: election.id})
+      statement = statement_fixture(%{avatar_id: avatar.id})
 
       [res] = Statements.list_statements(election)
       assert res.id == statement.id
-      assert res.election_id == election.id
-      assert res.politician_id == politician.id
+      assert res.avatar_id == avatar.id
 
       # assert that these are preloaded
-      assert res.politician
-      assert res.politician.party
+      assert res.avatar
+      assert res.avatar.politician
 
       # assert that the list is filtered by the given election
       another_election = election_fixture()
@@ -43,12 +42,10 @@ defmodule Lzh.StatementsTest do
     end
 
     test "create_statement/1 with valid data creates a statement" do
-      election = election_fixture()
-      politician = politician_fixture()
+      avatar = avatar_fixture()
 
       valid_attrs = %{
-        election_id: election.id,
-        politician_id: politician.id,
+        avatar_id: avatar.id,
         date: ~D[2023-08-18],
         tv_show: "some tv_show",
         tv_show_url: "some tv_show_url",
@@ -59,8 +56,7 @@ defmodule Lzh.StatementsTest do
       }
 
       assert {:ok, %Statement{} = statement} = Statements.create_statement(valid_attrs)
-      assert statement.election_id == election.id
-      assert statement.politician_id == politician.id
+      assert statement.avatar_id == avatar.id
       assert statement.date == ~D[2023-08-18]
       assert statement.tv_show == "some tv_show"
       assert statement.tv_show_url == "some tv_show_url"

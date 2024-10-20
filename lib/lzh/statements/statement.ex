@@ -28,8 +28,6 @@ defmodule Lzh.Statements.Statement do
   def changeset(statement, attrs) do
     statement
     |> cast(attrs, [
-      :election_id,
-      :politician_id,
       :avatar_id,
       :round,
       :date,
@@ -42,6 +40,7 @@ defmodule Lzh.Statements.Statement do
       :sources
     ])
     |> validate_required([
+      :avatar_id,
       :date,
       :tv_show,
       :tv_show_url,
@@ -50,8 +49,6 @@ defmodule Lzh.Statements.Statement do
       :response,
       :sources
     ])
-    |> assoc_constraint(:election)
-    |> assoc_constraint(:politician)
     |> assoc_constraint(:avatar)
     |> validate_subset(:round, [1, 2])
     |> validate_length(:tv_show, min: 1, max: 200)

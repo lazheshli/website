@@ -9,10 +9,6 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
 
   @impl true
   def mount(socket) do
-    socket =
-      socket
-      |> assign(:politicians_for_select, list_politicians_for_select())
-
     {:ok, socket}
   end
 
@@ -55,41 +51,6 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
   #
   # helpers
   #
-
-  defp list_politicians_for_select do
-    wanted =
-      MapSet.new([
-        "Бойко Борисов",
-        "Делян Добрев",
-        "Росен Желязков",
-        "Деница Сачева",
-        "Даниел Митов",
-        "Кирил Петков",
-        "Асен Василев",
-        "Даниел Лорер",
-        "Стефан Тафров",
-        "Христо Иванов",
-        "Делян Пеевски",
-        "Джевдет Чакъров",
-        "Илхан Кючюк",
-        "Йордан Цонев",
-        "Костадин Костадинов",
-        "Цончо Ганев",
-        "Петър Волгин",
-        "Корнелия Нинова",
-        "Георги Свиленски",
-        "Кристиан Вигенин",
-        "Станислав Трифонов",
-        "Тошко Хаджитодоров",
-        "Ивайло Вълчев",
-        "Станислав Балабанов"
-      ])
-
-    Politicians.list_politicians(preload_parties: true)
-    |> Enum.filter(&MapSet.member?(wanted, &1.name))
-    |> Enum.reject(&(&1.party.name == "Продължаваме промяната"))
-    |> Enum.into(Keyword.new(), &{"#{&1.name} (#{&1.party.name})", &1.id})
-  end
 
   defp list_avatars_for_select(election) do
     election

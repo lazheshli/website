@@ -9,7 +9,7 @@ defmodule Lzh.Statements do
   @doc """
   Returns the list of statements for a given election.
 
-  Preloads the avatars, the politicians and their parties.
+  Preloads the avatars together with the respective politicians.
 
   ## Examples
 
@@ -19,15 +19,13 @@ defmodule Lzh.Statements do
   """
   def list_statements(%Election{id: election_id}) do
     Statement
-    |> where([statement], statement.election_id == ^election_id)
     |> join(:left, [statement], avatar in assoc(statement, :avatar))
-    |> join(:left, [statement, _avatar], politician in assoc(statement, :politician))
-    |> join(:left, [_statement, _avatar, politician], party in assoc(politician, :party))
-    |> preload([_statement, avatar, politician, party],
-      avatar: avatar,
-      politician: {politician, party: party}
+    |> join(:left, [_statement, avatar], politician in assoc(avatar, :politician))
+    |> preload([_statement, avatar, politician],
+      avatar: {avatar, politician: politician}
     )
-    |> order_by([statement], asc: statement.date)
+    |> where([_statement, avatar, _politician], avatar.election_id == ^election_id)
+    |> order_by([statement, _avatar, _politician], asc: statement.date)
     |> Repo.all()
   end
 
@@ -110,40 +108,5 @@ defmodule Lzh.Statements do
   """
   def change_statement(%Statement{} = statement, attrs \\ %{}) do
     Statement.changeset(statement, attrs)
-  end
-
-  def migrate_to_avatars do
-    Statement
-    |> join(:left, [statement], politician in assoc(statement, :politician))
-    |> join(:left, [_statement, politician], party in assoc(politician, :party))
-    |> join(:left, [statement, _politician, _party], election in assoc(statement, :election))
-    |> preload(
-      [_statement, politician, party, election],
-      politician: {politician, party: party},
-      election: election
-    )
-    |> Repo.all()
-    |> Enum.map(&migrate_to_avatars/1)
-  end
-
-  defp migrate_to_avatars(%Statement{} = statement) do
-    avatar =
-      case Lzh.Politicians.get_avatar(statement.politician, statement.election) do
-        nil ->
-          {:ok, avatar} =
-            Lzh.Politicians.create_avatar(%{
-              politician_id: statement.politician_id,
-              election_id: statement.election_id,
-              party: statement.politician.party.name,
-              town: statement.politician.town
-            })
-
-          avatar
-
-        avatar ->
-          avatar
-      end
-
-    update_statement(statement, %{avatar_id: avatar.id})
   end
 end
