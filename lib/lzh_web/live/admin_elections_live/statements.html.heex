@@ -1,6 +1,17 @@
-<.h1>Твърдения</.h1>
+<.h2>
+  <%= @election.name %>, <%= @election.month_name %> <%= @election.date.year %> &mdash; твърдения
+</.h2>
 
-<div class="w-full flex flex-row items-center justify-between mb-4">
+<div class="w-full flex flex-row items-center justify-between">
+  <.link patch={~p"/админ/избори"} class="underline hover:no-underline">
+    ← Обратно към всички избори
+  </.link>
+  <.link patch={~p"/админ/избори/#{@election.id}/твърдения/ново"} replace={true}>
+    <.button>Ново твърдение</.button>
+  </.link>
+</div>
+
+<div class="mt-4 w-full flex flex-row items-center justify-between mb-4">
   <div class="flex flex-col gap-2">
     <span>Подредба</span>
     <div class="border-2 border-black bg-black gap-0.5 flex flex-wrap">
@@ -17,16 +28,12 @@
       </button>
     </div>
   </div>
-
-  <.link patch={~p"/админ/твърдения/ново"}>
-    <.button>Ново твърдение</.button>
-  </.link>
 </div>
 
 <div :for={statement <- @statements} class="w-full flex flex-row gap-4">
   <.statement statement={statement} />
   <div class="mt-4">
-    <.link patch={~p"/админ/твърдения/#{statement.id}/редакция"}>
+    <.link patch={~p"/админ/избори/#{@election.id}/твърдения/#{statement.id}"} replace={true}>
       <.button>Редактирай</.button>
     </.link>
   </div>
@@ -36,7 +43,7 @@
   :if={@live_action in [:new, :edit]}
   id="form_modal"
   show={true}
-  on_cancel={JS.patch(~p"/админ/твърдения")}
+  on_cancel={JS.patch(~p"/админ/избори/#{@election.id}/твърдения", replace: true)}
 >
   <%= if @live_action == :new do %>
     <.h2>Добавяне на ново твърдение</.h2>
@@ -45,7 +52,7 @@
   <% end %>
 
   <.live_component
-    module={LzhWeb.Admin.StatementsLive.FormComponent}
+    module={LzhWeb.Admin.ElectionsLive.StatementForm}
     id={"statement_form_#{@statement_for_form.id}"}
     statement={@statement_for_form}
     election={@election}

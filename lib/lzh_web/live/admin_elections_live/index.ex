@@ -5,7 +5,12 @@ defmodule LzhWeb.Admin.ElectionsLive.Index do
 
   @impl true
   def mount(%{} = _params, %{} = _assigns, socket) do
-    {:ok, assign_elections(socket)}
+    socket =
+      socket
+      |> assign_elections()
+      |> assign(:page_title, "Избори")
+
+    {:ok, socket}
   end
 
   #

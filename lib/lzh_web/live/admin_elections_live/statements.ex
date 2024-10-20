@@ -1,13 +1,12 @@
-defmodule LzhWeb.Admin.StatementsLive.Index do
+defmodule LzhWeb.Admin.ElectionsLive.Statements do
   use LzhWeb, :admin_live_view
 
   alias Lzh.{Elections, Statements}
   alias Statements.Statement
 
   @impl true
-  def mount(%{} = _params, %{} = _assigns, socket) do
-    # for now hard-coded
-    election = Elections.get_election_by_slug("2024-юни-парламентарни-избори")
+  def mount(%{"election" => election_id}, %{} = _assigns, socket) do
+    election = Elections.get_election!(election_id)
 
     socket =
       socket
@@ -52,7 +51,7 @@ defmodule LzhWeb.Admin.StatementsLive.Index do
   # helpers
   #
 
-  defp apply_live_action(socket, :edit, %{"id" => id}) do
+  defp apply_live_action(socket, :edit, %{"statement" => id}) do
     socket
     |> assign(:page_title, "Редакция на твърдение")
     |> assign(:statement_for_form, Statements.get_statement!(id))

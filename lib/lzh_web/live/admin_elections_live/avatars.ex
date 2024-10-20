@@ -29,6 +29,18 @@ defmodule LzhWeb.Admin.ElectionsLive.Avatars do
   end
 
   #
+  # view functions
+  #
+
+  def or_minus(string) do
+    if string != "" do
+      string
+    else
+      "-"
+    end
+  end
+
+  #
   # helpers
   #
 
@@ -54,13 +66,5 @@ defmodule LzhWeb.Admin.ElectionsLive.Avatars do
     socket
     |> assign(:page_title, "Редакция на играч")
     |> assign(:avatar_for_form, Politicians.get_avatar!(avatar_id))
-  end
-
-  defp or_minus(string) do
-    if string != "" do
-      string
-    else
-      "-"
-    end
   end
 end

@@ -5,7 +5,7 @@ defmodule LzhWeb.Admin.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <.h1>Настройки</.h1>
+    <.h2>Настройки</.h2>
 
     <div class="space-y-12 divide-y">
       <div>
@@ -15,7 +15,7 @@ defmodule LzhWeb.Admin.UserSettingsLive do
           phx-submit="update_email"
           phx-change="validate_email"
         >
-          <.h2>Поща</.h2>
+          <.h3>Поща</.h3>
 
           <.input field={@email_form[:email]} type="email" label="Поща" required />
           <.input
@@ -43,7 +43,7 @@ defmodule LzhWeb.Admin.UserSettingsLive do
           phx-submit="update_password"
           phx-trigger-action={@trigger_submit}
         >
-          <.h2>Парола</.h2>
+          <.h3>Парола</.h3>
 
           <input
             name={@password_form[:email].name}
@@ -106,6 +106,7 @@ defmodule LzhWeb.Admin.UserSettingsLive do
       |> assign(:email_form, to_form(email_changeset))
       |> assign(:password_form, to_form(password_changeset))
       |> assign(:trigger_submit, false)
+      |> assign(:page_title, "Настройки")
 
     {:ok, socket}
   end

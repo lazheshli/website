@@ -1,4 +1,4 @@
-<.h1>Избори</.h1>
+<.h2>Избори</.h2>
 
 <.table id="elections" rows={@elections}>
   <:col :let={election} label="Избори">
@@ -6,9 +6,15 @@
   </:col>
 
   <:col :let={election} label="Редакция">
-    <.link patch={~p"/админ/избори/#{election.id}/играчи"}>
-      <.button>Играчи</.button>
-    </.link>
+    <div class="flex flex-row gap-4 items-center">
+      <.link patch={~p"/админ/избори/#{election.id}/твърдения"}>
+        <.button>Твърдения</.button>
+      </.link>
+
+      <.link patch={~p"/админ/избори/#{election.id}/играчи"}>
+        <.button>Играчи</.button>
+      </.link>
+    </div>
   </:col>
 
   <:col :let={election} label="Статус">

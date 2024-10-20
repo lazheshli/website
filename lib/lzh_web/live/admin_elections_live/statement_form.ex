@@ -1,4 +1,4 @@
-defmodule LzhWeb.Admin.StatementsLive.FormComponent do
+defmodule LzhWeb.Admin.ElectionsLive.StatementForm do
   use LzhWeb, :live_component
 
   alias Lzh.{Politicians, Statements}
@@ -65,6 +65,8 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
   end
 
   defp save(socket, :new, params) do
+    election = socket.assigns.election
+
     params =
       params
       |> Map.put("election_id", socket.assigns.election.id)
@@ -77,7 +79,7 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
 
           socket
           |> put_flash(:info, "Новото твърдение е добавено.")
-          |> push_patch(to: ~p"/админ/твърдения")
+          |> push_patch(to: ~p"/админ/избори/#{election.id}/твърдения", replace: true)
 
         {:error, changeset} ->
           assign_form(socket, changeset)
@@ -87,6 +89,8 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
   end
 
   defp save(socket, :edit, params) do
+    election = socket.assigns.election
+
     params =
       params
       |> Map.put("sources", string_to_array(params["sources"]))
@@ -98,7 +102,7 @@ defmodule LzhWeb.Admin.StatementsLive.FormComponent do
 
           socket
           |> put_flash(:info, "Твърдението е запазено.")
-          |> push_patch(to: ~p"/админ/твърдения")
+          |> push_patch(to: ~p"/админ/избори/#{election.id}/твърдения", replace: true)
 
         {:error, changeset} ->
           assign_form(socket, changeset)

@@ -73,7 +73,7 @@ defmodule LzhWeb.Admin.ElectionsLive.AvatarForm do
 
           socket
           |> put_flash(:info, "Добавен е нов играч.")
-          |> push_patch(to: ~p"/админ/избори/#{election.id}/играчи")
+          |> push_patch(to: ~p"/админ/избори/#{election.id}/играчи", replace: true)
 
         {:error, changeset} ->
           assign_form(socket, changeset)
@@ -92,7 +92,7 @@ defmodule LzhWeb.Admin.ElectionsLive.AvatarForm do
 
           socket
           |> put_flash(:info, "Играчът е обновен.")
-          |> push_patch(to: ~p"/админ/избори/#{election.id}/играчи")
+          |> push_patch(to: ~p"/админ/избори/#{election.id}/играчи", replace: true)
 
         {:error, changeset} ->
           assign_form(socket, changeset)
