@@ -6,6 +6,8 @@ defmodule LzhWeb.Components do
 
   import LzhWeb.CoreComponents
 
+  alias Lzh.Markup
+
   attr :statement, :map, required: true
 
   def statement(%{} = assigns) do
@@ -109,8 +111,7 @@ defmodule LzhWeb.Components do
 
   defp text_to_html(text) do
     text
-    |> String.trim()
-    |> String.split("\n", trim: false)
-    |> Enum.intersperse({:safe, "<br />"})
+    |> Markup.to_html()
+    |> Phoenix.HTML.raw()
   end
 end
