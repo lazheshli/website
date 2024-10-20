@@ -7,6 +7,114 @@ defmodule LzhWeb.ContentComponents do
   """
   use Phoenix.Component
 
+  def election_details(%{year: 2024, month: "октомври"} = assigns) do
+    ~H"""
+    <details class="mb-6" open>
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои кандидати проверяваме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        В рамките на осмото издание на <b>„Лъжеш ли?“</b>
+        проверяваме истиността на изказванията на следните кандидати за Народно събрание, които ще участват в изборите на 27.10.2024:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">ГЕРБ-СДС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Делян Добрев</li>
+        <li>Йорданка Фандъкова</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Продължаваме промяната – Демократична България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Кирил Петков</li>
+        <li>Асен Василев</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">ДПС - Ново начало</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Йордан Цонев</li>
+        <li>Калин Стоянов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Алианс за права и свободи</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Джевдет Чакъров</li>
+        <li>Рамадан Аталай</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Възраждане</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Костадин Костадинов</li>
+        <li>Цончо Ганев</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">БСП - Обединена левица</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Атанас Зафиров</li>
+        <li>Борислав Гуцанов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Има такъв народ</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Станислав Балабанов</li>
+        <li>Тошко Хаджитодоров</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Величие</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Григор Здравков</li>
+        <li>Ивелин Михайлов</li>
+      </ul>
+    </details>
+
+    <details class="mb-6" open>
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои телевизии гледаме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Обхватът на осмото издание на <b>„Лъжеш ли?“</b>
+        са предизборните дебати и интервюта в национален ефир. Това включва всички предизборни дебати и интервюта по <b>БНТ</b>,
+        <b>bTV</b>
+        и <b>NOVA</b>.
+      </p>
+    </details>
+
+    <details class="mb-6" open>
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кога ще обявим резултатите от проверката?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Резултатите от проверката на изказванията на избраните кандидати за Народно събрание и Европейски парламент ще публикуваме на <b>26.10.2024</b>.
+        За акценти от предизборната кампания следете страниците ни във <a
+          href="https://www.facebook.com/lazheshli"
+          title="Последвай ни във Facebook"
+          class="underline"
+        >Facebook</a>, <a
+          href="https://www.instagram.com/lazheshli/"
+          title="Последвай ни в Instagram"
+          class="underline"
+          phx-no-format
+        >Instagram</a> и <a
+          href="https://www.threads.net/@lazheshli"
+          title="Последвай ни в Threads"
+          class="underline"
+        >Threads</a>.
+      </p>
+    </details>
+    """
+  end
+
   def election_details(%{year: 2024, month: "юни", show_statements: true} = assigns) do
     ~H"""
     <details class="mb-6">
