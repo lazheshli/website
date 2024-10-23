@@ -29,8 +29,8 @@ defmodule LzhWeb.ContentComponents do
       <h3 class="pb-2 text-lg font-bold">Продължаваме промяната – Демократична България</h3>
 
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
-        <li>Кирил Петков</li>
         <li>Асен Василев</li>
+        <li>Кирил Петков</li>
       </ul>
 
       <h3 class="pb-2 text-lg font-bold">ДПС - Ново начало</h3>
@@ -40,11 +40,11 @@ defmodule LzhWeb.ContentComponents do
         <li>Калин Стоянов</li>
       </ul>
 
-      <h3 class="pb-2 text-lg font-bold">Алианс за права и свободи</h3>
+      <h3 class="pb-2 text-lg font-bold">Алианс за права и свободи - АПС</h3>
 
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li>Джевдет Чакъров</li>
-        <li>Рамадан Аталай</li>
+        <li>Николай Цонев</li>
       </ul>
 
       <h3 class="pb-2 text-lg font-bold">Възраждане</h3>
@@ -71,8 +71,8 @@ defmodule LzhWeb.ContentComponents do
       <h3 class="pb-2 text-lg font-bold">Величие</h3>
 
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
-        <li>Григор Здравков</li>
         <li>Ивелин Михайлов</li>
+        <li>Красимира Катиничарова</li>
       </ul>
     </details>
 
