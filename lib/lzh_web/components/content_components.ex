@@ -72,7 +72,7 @@ defmodule LzhWeb.ContentComponents do
 
       <ul class="pb-4 pl-4 list-inside list-disc text-lg">
         <li>Ивелин Михайлов</li>
-        <li>Красимира Катиничарова</li>
+        <li>Красимира Катинчарова</li>
       </ul>
     </details>
 
