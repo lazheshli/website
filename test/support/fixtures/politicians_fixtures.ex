@@ -23,10 +23,6 @@ defmodule Lzh.PoliticiansFixtures do
   def politician_fixture(attrs \\ %{}) do
     {:ok, politician} =
       attrs
-      |> Map.put_new_lazy(:party_id, fn ->
-        party = party_fixture()
-        party.id
-      end)
       |> Map.put_new(:name, "Politician #{System.unique_integer([:positive])}")
       |> Lzh.Politicians.create_politician()
 

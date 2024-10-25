@@ -65,20 +65,13 @@ defmodule Lzh.PoliticiansTest do
   describe "politicians" do
     alias Lzh.Politicians.Politician
 
-    @invalid_attrs %{party_id: 0, name: nil}
+    @invalid_attrs %{name: nil}
 
     test "list_politicians returns all politicians" do
+      assert Politicians.list_politicians() == []
+
       politician = politician_fixture()
       assert Politicians.list_politicians() == [politician]
-    end
-
-    test "list_politicians can preload the parties" do
-      party = party_fixture()
-      politician = politician_fixture(%{party_id: party.id})
-
-      [output] = Politicians.list_politicians(preload_parties: true)
-      assert output.id == politician.id
-      assert output.party == party
     end
 
     test "get_politician!/1 returns the politician with given id" do
@@ -86,34 +79,18 @@ defmodule Lzh.PoliticiansTest do
       assert Politicians.get_politician!(politician.id) == politician
     end
 
-    test "get_politician/1 returns the politician with given name and party" do
-      party = party_fixture()
-      politician = politician_fixture(%{party_id: party.id})
+    test "get_politician/1 returns the politician with given name" do
+      politician = politician_fixture()
 
-      assert Politicians.get_politician(politician.name, party.id) == politician
-      assert Politicians.get_politician(politician.name, party) == politician
+      assert Politicians.get_politician(politician.name) == politician
+      assert Politicians.get_politician("лъже-" <> politician.name) == nil
     end
 
-    test "create_politician/1 with party_id and name creates a politician" do
-      party = party_fixture()
-
-      valid_attrs = %{party_id: party.id, name: "some name"}
+    test "create_politician/1 with name creates a politician" do
+      valid_attrs = %{name: "some name"}
 
       assert {:ok, %Politician{} = politician} = Politicians.create_politician(valid_attrs)
-      assert politician.party_id == party.id
       assert politician.name == "some name"
-      assert politician.town == ""
-    end
-
-    test "create_politician/1 with party_id, name, and town creates a politician" do
-      party = party_fixture()
-
-      valid_attrs = %{party_id: party.id, name: "some name", town: "Town"}
-
-      assert {:ok, %Politician{} = politician} = Politicians.create_politician(valid_attrs)
-      assert politician.party_id == party.id
-      assert politician.name == "some name"
-      assert politician.town == "Town"
     end
 
     test "create_politician/1 with invalid data returns error changeset" do

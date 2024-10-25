@@ -127,30 +127,16 @@ defmodule Lzh.Politicians do
   @doc """
   Returns the list of politicians.
 
-  If the :preload_parties flag is set, preloads the political parties.
-
   ## Examples
 
       iex> list_politicians()
       [%Politician{}, ...]
 
   """
-  def list_politicians(opts \\ []) do
+  def list_politicians do
     Politician
-    |> maybe_preload_party(opts)
     |> order_by([politician], asc: politician.name, asc: politician.id)
     |> Repo.all()
-  end
-
-  defp maybe_preload_party(query, opts) do
-    case Keyword.fetch(opts, :preload_parties) do
-      {:ok, true} ->
-        query
-        |> preload([politician], :party)
-
-      _ ->
-        query
-    end
   end
 
   @doc """
@@ -170,25 +156,19 @@ defmodule Lzh.Politicians do
   def get_politician!(id), do: Repo.get!(Politician, id)
 
   @doc """
-  Gets a single politician by name and political party.
+  Gets a single politician by name.
 
   ## Examples
 
-      iex> get_party("Има")
-      %Party{}
+      iex> get_politician("Има")
+      %Politician{}
 
-      iex> get_party("Няма")
+      iex> get_politician("Няма")
       nil
 
   """
-  def get_politician(name, party)
-
-  def get_politician(name, %Party{id: party_id}) do
-    get_politician(name, party_id)
-  end
-
-  def get_politician(name, party_id) when is_integer(party_id) do
-    Repo.get_by(Politician, name: name, party_id: party_id)
+  def get_politician(name) do
+    Repo.get_by(Politician, name: name)
   end
 
   @doc """
