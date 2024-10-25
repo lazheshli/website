@@ -1,13 +1,12 @@
 defmodule Lzh.StatementsTest do
   use Lzh.DataCase
 
+  import Lzh.{ElectionsFixtures, PoliticiansFixtures, StatementsFixtures}
+
   alias Lzh.Statements
+  alias Lzh.Statements.Statement
 
   describe "statements" do
-    alias Lzh.Statements.Statement
-
-    import Lzh.{ElectionsFixtures, PoliticiansFixtures, StatementsFixtures}
-
     @invalid_attrs %{
       date: nil,
       tv_show: nil,
@@ -34,6 +33,17 @@ defmodule Lzh.StatementsTest do
       # assert that the list is filtered by the given election
       another_election = election_fixture()
       assert Statements.list_statements(another_election) == []
+    end
+
+    test "count_statements/1 returns the number for an avatar" do
+      avatar = avatar_fixture()
+      assert Statements.count_statements(avatar) == 0
+
+      statement_fixture(%{avatar_id: avatar.id})
+      assert Statements.count_statements(avatar) == 1
+
+      statement_fixture()
+      assert Statements.count_statements(avatar) == 1
     end
 
     test "get_statement!/1 returns the statement with given id" do

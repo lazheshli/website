@@ -7,7 +7,7 @@
     ← Обратно към всички избори
   </.link>
   <.link patch={~p"/админ/избори/#{@election.id}/играчи/нов"} replace={true}>
-    <.button>Нов играч</.button>
+    <.button>Добави играч</.button>
   </.link>
 </div>
 
@@ -15,10 +15,28 @@
   <:col :let={avatar} label="Играч"><%= avatar.politician.name %></:col>
   <:col :let={avatar} label="Партия"><%= or_minus(avatar.party) %></:col>
   <:col :let={avatar} label="Град"><%= or_minus(avatar.town) %></:col>
+  <:col :let={avatar} label="Лъжи"><%= avatar.num_statements %></:col>
   <:col :let={avatar} label="Действия">
-    <.link patch={~p"/админ/избори/#{@election.id}/играчи/#{avatar.id}"} replace={true}>
-      <.button>Редактирай</.button>
-    </.link>
+    <div class="flex flex-row gap-4">
+      <.link
+        patch={~p"/админ/избори/#{@election.id}/играчи/#{avatar.id}"}
+        replace={true}
+        title="Редактирай името, партията или града на този играч"
+      >
+        <.button>Редактирай</.button>
+      </.link>
+
+      <%= if avatar.num_statements == 0 do %>
+        <.link
+          phx-click="delete"
+          phx-value-id={avatar.id}
+          data-confirm={"Сигурен ли си, че искаш #{avatar.politician.name} да не е сред следените политици за тези избори?"}
+          title={"Премахни #{avatar.politician.name} от следените политици за тези избори"}
+        >
+          <.button>Премахни</.button>
+        </.link>
+      <% end %>
+    </div>
   </:col>
 </.table>
 

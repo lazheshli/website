@@ -1,7 +1,7 @@
 defmodule LzhWeb.Admin.ElectionsLive.Avatars do
   use LzhWeb, :admin_live_view
 
-  alias Lzh.{Elections, Politicians}
+  alias Lzh.{Elections, Politicians, Statements}
   alias Lzh.Politicians.Avatar
 
   @impl true
@@ -29,6 +29,25 @@ defmodule LzhWeb.Admin.ElectionsLive.Avatars do
   end
 
   #
+  # event handlers
+  #
+
+  @impl true
+  def handle_event("delete", %{"id" => avatar_id}, socket) do
+    {:ok, avatar} =
+      avatar_id
+      |> Politicians.get_avatar!()
+      |> Politicians.delete_avatar()
+
+    socket =
+      socket
+      |> assign_avatars()
+      |> put_flash(:info, "#{avatar.politician.name} вече не е сред играчите за тези избори.")
+
+    {:noreply, socket}
+  end
+
+  #
   # view functions
   #
 
@@ -45,7 +64,12 @@ defmodule LzhWeb.Admin.ElectionsLive.Avatars do
   #
 
   defp assign_avatars(socket) do
-    avatars = Politicians.list_avatars(socket.assigns.election)
+    avatars =
+      socket.assigns.election
+      |> Politicians.list_avatars()
+      |> Enum.map(fn avatar ->
+        Map.put(avatar, :num_statements, Statements.count_statements(avatar))
+      end)
 
     assign(socket, :avatars, avatars)
   end
