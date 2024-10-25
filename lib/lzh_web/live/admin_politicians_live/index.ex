@@ -2,15 +2,23 @@ defmodule LzhWeb.Admin.PoliticiansLive.Index do
   use LzhWeb, :admin_live_view
 
   alias Lzh.{Elections, Politicians}
+  alias Lzh.Politicians.Politician
 
   @impl true
   def mount(%{} = _params, %{} = _assigns, socket) do
-    socket =
-      socket
-      |> assign_politicians()
-      |> assign(:page_title, "Политици")
+    {:ok, assign_politicians(socket)}
+  end
 
-    {:ok, socket}
+  @impl true
+  def handle_params(%{} = params, _url, socket) do
+    socket = apply_live_action(socket, socket.assigns.live_action, params)
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:saved, _politician}, socket) do
+    {:noreply, assign_politicians(socket)}
   end
 
   #
@@ -55,5 +63,17 @@ defmodule LzhWeb.Admin.PoliticiansLive.Index do
       end)
 
     assign(socket, :politicians, politicians)
+  end
+
+  defp apply_live_action(socket, :index, _params) do
+    socket
+    |> assign(:page_title, "Политици")
+    |> assign(:avatar_for_form, nil)
+  end
+
+  defp apply_live_action(socket, :new, _params) do
+    socket
+    |> assign(:page_title, "Нов политик")
+    |> assign(:politician_for_form, %Politician{})
   end
 end

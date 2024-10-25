@@ -2,6 +2,9 @@
 
 <div class="w-full flex flex-row items-center justify-between">
   <em>Всички следени политици &mdash; на кои избори и под чие знаме са се подвизавали.</em>
+  <.link patch={~p"/админ/политици/нов"} replace={true} title="Добави нов политик">
+    <.button>Добави нов</.button>
+  </.link>
 </div>
 
 <.table id="politicians" rows={@politicians}>
@@ -37,3 +40,19 @@
     <% end %>
   </:col>
 </.table>
+
+<.modal
+  :if={@live_action in [:new]}
+  id="form_modal"
+  show={true}
+  on_cancel={JS.patch(~p"/админ/политици", replace: true)}
+>
+  <.h2>Добавяне на нов политик</.h2>
+
+  <.live_component
+    module={LzhWeb.Admin.PoliticiansLive.PoliticianForm}
+    id={"politician_form_#{@politician_for_form.id}"}
+    politician={@politician_for_form}
+    action={@live_action}
+  />
+</.modal>

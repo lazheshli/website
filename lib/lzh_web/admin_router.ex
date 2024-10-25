@@ -35,7 +35,6 @@ defmodule LzhWeb.Admin.Router do
 
       live "/админ/политици", PoliticiansLive.Index, :index
       live "/админ/политици/нов", PoliticiansLive.Index, :new
-      live "/админ/политици/:id", PoliticiansLive.Index, :edit
 
       live "/админ/настройки", UserSettingsLive, :edit
       live "/админ/настройки/потвърждаване/:token", UserSettingsLive, :confirm_email

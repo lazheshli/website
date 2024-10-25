@@ -1,0 +1,16 @@
+<section>
+  <.form
+    id="politician_admin_form"
+    for={@form}
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+    class="flex flex-col gap-5"
+  >
+    <.input field={@form[:name]} type="text" label="Име" />
+
+    <div class="flex flex-row-reverse">
+      <.button phx-disable-with="Запазване">Запази</.button>
+    </div>
+  </.form>
+</section>
