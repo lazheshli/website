@@ -47,6 +47,21 @@ defmodule LzhWeb.Admin.ElectionsLive.Statements do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_event("delete", %{"id" => statement_id}, socket) do
+    {:ok, _} =
+      statement_id
+      |> Statements.get_statement!()
+      |> Statements.delete_statement()
+
+    socket =
+      socket
+      |> assign_statements()
+      |> put_flash(:info, "Твърдението бе безпощадно изтрито.")
+
+    {:noreply, socket}
+  end
+
   #
   # helpers
   #

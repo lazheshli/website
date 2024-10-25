@@ -32,10 +32,26 @@
 
 <div :for={statement <- @statements} class="w-full flex flex-row gap-4">
   <.statement statement={statement} />
-  <div class="mt-4">
-    <.link patch={~p"/админ/избори/#{@election.id}/твърдения/#{statement.id}"} replace={true}>
+
+  <div class="mt-4 flex flex-col gap-4">
+    <.link
+      patch={~p"/админ/избори/#{@election.id}/твърдения/#{statement.id}"}
+      replace={true}
+      title="Редактирай това твърдение"
+    >
       <.button>Редактирай</.button>
     </.link>
+
+    <%= if @election.show_statements == false do %>
+      <.link
+        phx-click="delete"
+        phx-value-id={statement.id}
+        data-confirm="Сигурен ли си, че искаш да изтриеш това твърдение?"
+        title="Изтрий това твърдение"
+      >
+        <.button>Изтрий</.button>
+      </.link>
+    <% end %>
   </div>
 </div>
 
