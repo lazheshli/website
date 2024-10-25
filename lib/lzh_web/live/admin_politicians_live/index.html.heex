@@ -1,0 +1,39 @@
+<.h2>Политици</.h2>
+
+<div class="w-full flex flex-row items-center justify-between">
+  <em>Всички следени политици &mdash; на кои избори и под чие знаме са се подвизавали.</em>
+</div>
+
+<.table id="politicians" rows={@politicians}>
+  <:col :let={politician} label="Политик">
+    <%= politician.name %>
+  </:col>
+
+  <:col :let={politician} label="Участия">
+    <%= if length(politician.avatars) > 0 do %>
+      <ul class="list-disc list-inside">
+        <li :for={avatar <- politician.avatars}>
+          <%= avatar.party %> &mdash; <%= election_name(avatar.election) %>
+          <%= if avatar.election.type == :local do %>
+            (<%= avatar.town %>)
+          <% end %>
+        </li>
+      </ul>
+    <% else %>
+      <span>няма участия</span>
+    <% end %>
+  </:col>
+
+  <:col :let={politician} label="Действия">
+    <%= if length(politician.avatars) == 0 do %>
+      <.link
+        phx-click="delete"
+        phx-value-id={politician.id}
+        data-confirm={"Сигурен ли си, че искаш да изтриеш #{politician.name}?"}
+        title={"Изтрий #{politician.name}"}
+      >
+        <.button>Изтрий</.button>
+      </.link>
+    <% end %>
+  </:col>
+</.table>

@@ -7,6 +7,10 @@ defmodule LzhWeb.Admin.UserSettingsLive do
     ~H"""
     <.h2>Настройки</.h2>
 
+    <div class="w-full flex flex-row items-center">
+      <em>Промени пощата и/или паролата, с които влизаш в този админ панел.</em>
+    </div>
+
     <div class="space-y-12 divide-y">
       <div>
         <.simple_form

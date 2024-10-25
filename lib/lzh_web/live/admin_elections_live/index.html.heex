@@ -1,5 +1,11 @@
 <.h2>Избори</.h2>
 
+<div class="w-full flex flex-row items-center justify-between">
+  <em>
+    Всички избори в историята на „Лъжеш ли?“ &mdash; редакция на следени играчи и неверни твърдения, публикуване.
+  </em>
+</div>
+
 <.table id="elections" rows={@elections}>
   <:col :let={election} label="Избори">
     <%= election.name %> &mdash; <%= election.month_name %> <%= election.date.year %>
@@ -17,7 +23,7 @@
     </div>
   </:col>
 
-  <:col :let={election} label="Статус">
+  <:col :let={election} label="Видимост на уебсайта">
     <div class="flex flex-row gap-4 items-center">
       <%= if election.show_statements do %>
         <span>Твърденията са публикувани</span>

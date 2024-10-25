@@ -26,14 +26,16 @@ defmodule LzhWeb.Admin.Router do
       live "/админ", ElectionsLive.Index, :index
 
       live "/админ/избори", ElectionsLive.Index, :index
-
       live "/админ/избори/:election/играчи", ElectionsLive.Avatars, :index
       live "/админ/избори/:election/играчи/нов", ElectionsLive.Avatars, :new
       live "/админ/избори/:election/играчи/:avatar", ElectionsLive.Avatars, :edit
-
       live "/админ/избори/:election/твърдения", ElectionsLive.Statements, :index
       live "/админ/избори/:election/твърдения/ново", ElectionsLive.Statements, :new
       live "/админ/избори/:election/твърдения/:statement", ElectionsLive.Statements, :edit
+
+      live "/админ/политици", PoliticiansLive.Index, :index
+      live "/админ/политици/нов", PoliticiansLive.Index, :new
+      live "/админ/политици/:id", PoliticiansLive.Index, :edit
 
       live "/админ/настройки", UserSettingsLive, :edit
       live "/админ/настройки/потвърждаване/:token", UserSettingsLive, :confirm_email
