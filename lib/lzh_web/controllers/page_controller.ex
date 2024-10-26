@@ -7,7 +7,11 @@ defmodule LzhWeb.PageController do
   plug :assign_action
 
   def home(conn, _params) do
+    [election, last_election] = Enum.take(Elections.list_elections(), 2)
+
     conn
+    |> assign(:election, election)
+    |> assign(:last_election, last_election)
     |> assign(:page_title, "Начало")
     |> render(:home)
   end

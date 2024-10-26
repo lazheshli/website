@@ -26,6 +26,12 @@ defmodule Lzh.Elections do
     :local => "местни-избори"
   }
 
+  @types_for %{
+    :parliamentary => "Народно събрание",
+    :presidential => "президентските избори",
+    :local => "местните избори"
+  }
+
   #
   # retrieving elections
   #
@@ -149,6 +155,23 @@ defmodule Lzh.Elections do
   end
 
   @doc """
+  Return an election's name when referring to what is being elected.
+
+  ## Examples
+
+    iex> election_for(election)
+    "Народно събрание"
+
+  """
+  def election_name_for(%Election{date: ~D[2024-06-09]}) do
+    "Народно събрание и Европейски парламент"
+  end
+
+  def election_name_for(%Election{} = election) do
+    Map.get(@types_for, election.type)
+  end
+
+  @doc """
   Return an election's month name.
 
   ## Examples
@@ -240,6 +263,7 @@ defmodule Lzh.Elections do
     election
     |> Map.put(:slug, election_slug(election))
     |> Map.put(:name, election_name(election))
+    |> Map.put(:name_for, election_name_for(election))
     |> Map.put(:month_name, election_month_name(election))
   end
 
