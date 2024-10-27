@@ -170,7 +170,9 @@ defmodule Lzh.PoliticiansTest do
       politician = politician_fixture()
       election = election_fixture()
       avatar = avatar_fixture(%{politician_id: politician.id, election_id: election.id})
+
       assert Politicians.get_avatar(politician, election) == avatar
+      assert Politicians.get_avatar(politician.name, election) == avatar
     end
 
     test "create_avatar/1 with valid data creates a avatar" do

@@ -84,6 +84,12 @@ defmodule LzhWeb.Admin.ElectionsLive.Statements do
     |> assign(:statement_for_form, nil)
   end
 
+  defp apply_live_action(socket, :upload, _params) do
+    socket
+    |> assign(:page_title, "Качване на твърдения")
+    |> assign(:statement_for_form, nil)
+  end
+
   defp assign_statements(socket) do
     statements =
       socket.assigns.election

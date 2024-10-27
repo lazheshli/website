@@ -280,9 +280,14 @@ defmodule Lzh.Politicians do
     |> preload([_avatar, politician, election], [:politician, :election])
   end
 
-  defp filter_by_politician(query, %Politician{id: politician_id}) do
+  defp filter_by_politician(query, %Politician{id: id}) do
     query
-    |> where([avatar], avatar.politician_id == ^politician_id)
+    |> where([avatar], avatar.politician_id == ^id)
+  end
+
+  defp filter_by_politician(query, name) when is_binary(name) do
+    query
+    |> where([avatar, politician], politician.name == ^name)
   end
 
   defp filter_by_election(query, %Election{id: election_id}) do
@@ -325,7 +330,7 @@ defmodule Lzh.Politicians do
       nil
 
   """
-  def get_avatar(%Politician{} = politician, %Election{} = election) do
+  def get_avatar(politician, %Election{} = election) do
     Avatar
     |> preload_politician_and_election()
     |> filter_by_politician(politician)

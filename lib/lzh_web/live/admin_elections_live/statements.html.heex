@@ -6,9 +6,15 @@
   <.link patch={~p"/админ/избори"} class="underline hover:no-underline">
     ← Обратно към всички избори
   </.link>
-  <.link patch={~p"/админ/избори/#{@election.id}/твърдения/ново"} replace={true}>
-    <.button>Ново твърдение</.button>
-  </.link>
+
+  <div class="flex flex-row gap-4">
+    <.link patch={~p"/админ/избори/#{@election.id}/твърдения/качване"} replace={true}>
+      <.button>Качи CSV</.button>
+    </.link>
+    <.link patch={~p"/админ/избори/#{@election.id}/твърдения/ново"} replace={true}>
+      <.button>Ново твърдение</.button>
+    </.link>
+  </div>
 </div>
 
 <div class="mt-4 w-full flex flex-row items-center justify-between mb-4">
@@ -69,9 +75,24 @@
 
   <.live_component
     module={LzhWeb.Admin.ElectionsLive.StatementForm}
-    id={"statement_form_#{@statement_for_form.id}"}
+    id={"statement_form_component_#{@statement_for_form.id}"}
     statement={@statement_for_form}
     election={@election}
     action={@live_action}
+  />
+</.modal>
+
+<.modal
+  :if={@live_action == :upload}
+  id="upload_form_modal"
+  show={true}
+  on_cancel={JS.patch(~p"/админ/избори/#{@election.id}/твърдения", replace: true)}
+>
+  <.h2>Качване на твърдения</.h2>
+
+  <.live_component
+    module={LzhWeb.Admin.ElectionsLive.StatementsUploadForm}
+    id="statements_upload_form_component"
+    election={@election}
   />
 </.modal>

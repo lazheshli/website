@@ -30,6 +30,7 @@ defmodule LzhWeb.Admin.Router do
       live "/админ/избори/:election/играчи/нов", ElectionsLive.Avatars, :new
       live "/админ/избори/:election/играчи/:avatar", ElectionsLive.Avatars, :edit
       live "/админ/избори/:election/твърдения", ElectionsLive.Statements, :index
+      live "/админ/избори/:election/твърдения/качване", ElectionsLive.Statements, :upload
       live "/админ/избори/:election/твърдения/ново", ElectionsLive.Statements, :new
       live "/админ/избори/:election/твърдения/:statement", ElectionsLive.Statements, :edit
 

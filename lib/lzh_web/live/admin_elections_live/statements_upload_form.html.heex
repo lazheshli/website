@@ -1,0 +1,22 @@
+<section>
+  <.form
+    id="statements_upload_form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+    class="flex flex-col gap-5"
+  >
+    <div>
+      <.error :for={message <- @errors}><%= message %></.error>
+    </div>
+
+    <div>
+      <.label>CSV файл</.label>
+      <.live_file_input upload={@uploads.csv_file} />
+    </div>
+
+    <div class="flex flex-row-reverse">
+      <.button phx-disable-with="Качване">Качи</.button>
+    </div>
+  </.form>
+</section>
