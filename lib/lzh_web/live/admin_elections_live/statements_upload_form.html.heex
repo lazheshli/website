@@ -1,6 +1,7 @@
 <section>
   <.form
     id="statements_upload_form"
+    for={nil}
     phx-target={@myself}
     phx-change="validate"
     phx-submit="save"
@@ -12,7 +13,26 @@
 
     <div>
       <.label>CSV файл</.label>
+
       <.live_file_input upload={@uploads.csv_file} />
+
+      <p class="mt-2 text-sm">Файлът трябва да съдържа поне следните колони:</p>
+
+      <ul class="mt-1 list-disc list-inside font-mono text-sm">
+        <li>politician</li>
+        <li>date</li>
+        <li>tv_show</li>
+        <li>tv_show_url</li>
+        <li>tv_show_minute</li>
+        <li>statement</li>
+        <li>context</li>
+        <li>response</li>
+        <li>source_1, source_2, source_3, ...</li>
+      </ul>
+
+      <p class="mt-1 text-sm">
+        Един за всички, всички за един &mdash; ако някое твърдение не може да бъде разчетено, никое няма да бъде записано в базата данни.
+      </p>
     </div>
 
     <div class="flex flex-row-reverse">

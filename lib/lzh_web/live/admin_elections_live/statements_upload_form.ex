@@ -78,7 +78,7 @@ defmodule LzhWeb.Admin.ElectionsLive.StatementsUploadForm do
         errors =
           changesets
           |> Enum.with_index(1)
-          |> Enum.reject(fn {changeset, index} -> changeset.valid? end)
+          |> Enum.reject(fn {changeset, _index} -> changeset.valid? end)
           |> Enum.map(fn {changeset, index} ->
             columns =
               changeset.errors
