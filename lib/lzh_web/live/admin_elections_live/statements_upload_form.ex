@@ -78,6 +78,7 @@ defmodule LzhWeb.Admin.ElectionsLive.StatementsUploadForm do
         errors =
           changesets
           |> Enum.with_index(1)
+          |> Enum.reject(fn {changeset, index} -> changeset.valid? end)
           |> Enum.map(fn {changeset, index} ->
             columns =
               changeset.errors
@@ -101,7 +102,7 @@ defmodule LzhWeb.Admin.ElectionsLive.StatementsUploadForm do
   def parse_csv(path) do
     all_rows =
       File.stream!(path)
-      |> CSV.decode!()
+      |> CSV.decode!(escape_max_lines: 100)
       |> Enum.into([])
 
     [headers | rows] = all_rows
@@ -120,11 +121,17 @@ defmodule LzhWeb.Admin.ElectionsLive.StatementsUploadForm do
 
     date =
       row["date"]
-      |> String.split([".", "/"])
+      |> String.split([".", "/"], trim: true)
       |> Enum.map(&String.to_integer/1)
-      |> (fn [day, month, year] ->
-            {:ok, date} = Date.new(year, month, day)
-            date
+      |> (fn numbers ->
+            case numbers do
+              [day, month, year] ->
+                {:ok, date} = Date.new(year, month, day)
+                date
+
+              _ ->
+                nil
+            end
           end).()
 
     tv_show_minute =
@@ -142,7 +149,7 @@ defmodule LzhWeb.Admin.ElectionsLive.StatementsUploadForm do
       |> Enum.reject(fn value -> value == "" end)
 
     %{
-      avatar_id: avatar.id,
+      avatar_id: if(avatar, do: avatar.id, else: nil),
       date: date,
       tv_show: row["tv_show"],
       tv_show_url: row["tv_show_url"],
