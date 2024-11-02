@@ -46,6 +46,26 @@ defmodule Lzh.StatementsTest do
       assert Statements.count_statements(avatar) == 1
     end
 
+    test "count_statements/1 returns the number for a politician" do
+      politician = politician_fixture()
+      assert Statements.count_statements(politician) == 0
+
+      avatar_one = avatar_fixture(%{politician_id: politician.id})
+      assert Statements.count_statements(politician) == 0
+
+      statement_fixture(%{avatar_id: avatar_one.id})
+      assert Statements.count_statements(politician) == 1
+
+      avatar_two = avatar_fixture(%{politician_id: politician.id})
+      assert Statements.count_statements(politician) == 1
+
+      statement_fixture(%{avatar_id: avatar_two.id})
+      assert Statements.count_statements(politician) == 2
+
+      statement_fixture()
+      assert Statements.count_statements(politician) == 2
+    end
+
     test "get_statement!/1 returns the statement with given id" do
       statement = statement_fixture()
       assert Statements.get_statement!(statement.id) == statement

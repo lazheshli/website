@@ -7,6 +7,25 @@
   </.link>
 </div>
 
+<div class="mt-4 w-full flex flex-row items-center justify-between mb-4">
+  <div class="flex flex-col gap-2">
+    <span>Подредба</span>
+    <div class="border-2 border-black bg-black gap-0.5 flex flex-wrap">
+      <button
+        :for={{key, label} <- [name: "име", num_statements: "брой лъжи"]}
+        phx-click="set_order_by"
+        phx-value-key={key}
+        class={[
+          "py-2 px-3 bg-zinc-200 hover:bg-zinc-700 text-sm font-semibold leading-6 text-zinc-900 hover:text-white flex flex-row gap-0.5 items-center",
+          if(@order_by == key, do: "bg-zinc-700 !text-white")
+        ]}
+      >
+        <%= label %>
+      </button>
+    </div>
+  </div>
+</div>
+
 <.table id="politicians" rows={@politicians}>
   <:col :let={politician} label="Политик">
     <%= politician.name %>
@@ -26,6 +45,8 @@
       <span>няма участия</span>
     <% end %>
   </:col>
+
+  <:col :let={politician} label="Лъжи"><%= politician.num_statements %></:col>
 
   <:col :let={politician} label="Действия">
     <%= if length(politician.avatars) == 0 do %>

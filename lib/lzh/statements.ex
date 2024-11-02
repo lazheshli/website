@@ -4,7 +4,7 @@ defmodule Lzh.Statements do
   alias Lzh.Repo
 
   alias Lzh.Elections.Election
-  alias Lzh.Politicians.Avatar
+  alias Lzh.Politicians.{Avatar, Politician}
   alias Lzh.Statements.Statement
 
   @doc """
@@ -31,18 +31,29 @@ defmodule Lzh.Statements do
   end
 
   @doc """
-  Return the number of statements which belong to the given avatar.
+  Return the number of statements which belong to a given politician or avatar.
 
   ## Examples
 
       iex> count_statements(avatar)
       42
 
+      iex> count_statements(avatar.politician)
+      142
+
   """
   def count_statements(%Avatar{id: avatar_id}) do
     Statement
     |> where([statement], statement.avatar_id == ^avatar_id)
     |> select([_statement], count())
+    |> Repo.one()
+  end
+
+  def count_statements(%Politician{id: politician_id}) do
+    Statement
+    |> join(:left, [statement], avatar in assoc(statement, :avatar))
+    |> where([_statement, avatar], avatar.politician_id == ^politician_id)
+    |> select([_statement, _avatar], count())
     |> Repo.one()
   end
 
