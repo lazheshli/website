@@ -4,8 +4,6 @@ defmodule Lzh.Statements.Statement do
   import Ecto.Changeset
 
   schema "statements" do
-    belongs_to :election, Lzh.Elections.Election
-    belongs_to :politician, Lzh.Politicians.Politician
     belongs_to :avatar, Lzh.Politicians.Avatar
 
     field :round, :integer, default: 1

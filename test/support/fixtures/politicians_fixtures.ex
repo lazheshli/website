@@ -6,18 +6,6 @@ defmodule Lzh.PoliticiansFixtures do
   import Lzh.ElectionsFixtures
 
   @doc """
-  Generates a political party.
-  """
-  def party_fixture(attrs \\ %{}) do
-    {:ok, party} =
-      attrs
-      |> Map.put_new(:name, "Party #{System.unique_integer([:positive])}")
-      |> Lzh.Politicians.create_party()
-
-    party
-  end
-
-  @doc """
   Generates a politician.
   """
   def politician_fixture(attrs \\ %{}) do
