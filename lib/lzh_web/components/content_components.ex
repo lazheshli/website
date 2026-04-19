@@ -7,6 +7,64 @@ defmodule LzhWeb.ContentComponents do
   """
   use Phoenix.Component
 
+  def election_details(%{year: 2026, month: "април", show_statements: true} = assigns) do
+    ~H"""
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои кандидати проверихме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        В рамките на деветото издание на <b>„Лъжеш ли?“</b>
+        проверихме истиността на изказванията на следните кандидати за Народно събрание на изборите на 19.04.2026:
+      </p>
+
+      <h3 class="pb-2 text-lg font-bold">ГЕРБ-СДС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Бойко Борисов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Продължаваме промяната – Демократична България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Асен Василев</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Възраждане</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Костадин Костадинов</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">ДПС</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Делян Пеевски</li>
+      </ul>
+
+      <h3 class="pb-2 text-lg font-bold">Прогресивна България</h3>
+
+      <ul class="pb-4 pl-4 list-inside list-disc text-lg">
+        <li>Румен Радев</li>
+      </ul>
+    </details>
+
+    <details class="mb-6">
+      <summary class="w-fit my-4 lg:pb-2 clear-both text-2xl lg:text-3xl leading-snug border-b-2 border-black cursor-pointer">
+        Кои телевизии гледахме?
+      </summary>
+
+      <p class="pb-4 text-lg">
+        Обхватът на деветото издание на <b>„Лъжеш ли?“</b>
+        са предизборните дебати и интервюта в национален ефир, които се проведоха в периода до <b>17.04.2026</b>. Това включва всички предизборни дебати и интервюта по <b>БНТ</b>,
+        <b>bTV</b>
+        и <b>NOVA</b>.
+      </p>
+    </details>
+    """
+  end
+
   def election_details(%{year: 2024, month: "октомври", show_statements: true} = assigns) do
     ~H"""
     <details class="mb-6">
